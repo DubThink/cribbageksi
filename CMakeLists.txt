@@ -3,4 +3,4 @@ project(cribbageksi)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(cribbageksi main.cpp Deck.h CribbageGame.h CribbageAgent.h)
+add_executable(cribbageksi main.cpp Deck.h CribbageGame.h CribbageAgent.h CribbageGame.cpp Deck.cpp)

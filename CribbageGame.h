@@ -8,7 +8,12 @@
 #include "CribbageAgent.h"
 
 class CribbageGame{
+private:
+    Deck deck;
+    const CribbageAgent &agentA, &agentB;
+
 public:
-    CribbageGame(CribbageAgent agentA,CribbageAgent agentB);
+    CribbageGame(CribbageAgent &agentA,CribbageAgent &agentB);
+    void runGame();
 };
 #endif //CRIBBAGEKSI_CRIBBAGEGAME_H

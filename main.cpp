@@ -1,6 +1,8 @@
 #include <iostream>
+#include "Deck.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+    Deck deck=Deck();
+    deck.shuffle();
+    deck.printDeck();
 }
