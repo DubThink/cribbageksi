@@ -14,7 +14,27 @@ class TestDeck(unittest.TestCase):
 
 
     def test_draw(self):
-        pass
+        s = set()
+        deck = Deck()
+        deck.shuffle()
+        for i in range(52):
+            v = deck.drawCard()
+            self.assertFalse(v in s)
+            s.add(v)
+        self.assertTrue(len(deck.cards)==0)
+
+    def test_draw(self):
+        s = set()
+        deck = Deck()
+        deck.shuffle()
+        for i in [5,9,2,1,0,13,10,2,6,4]:
+            v = deck.drawCards(i)
+            ss = set(v)
+            self.assertTrue(len(ss) == len(v))
+            self.assertTrue(s.isdisjoint(ss))
+            s = s.union(s)
+        self.assertTrue(len(deck.cards) == 0)
+
 
 if __name__ == '__main__':
     unittest.main()
