@@ -14,17 +14,13 @@ class CribbageAgent:
         if is_dealer:
             end = len(hand)
             discard_index = random.randint(0, end)
-            discard_index2 = random.randint(0, end)
-            if discard_index == discard_index2:
-                discard_index2 += 1
+            discard_index2 = random.randint(0, end - 1)
             return hand[discard_index], hand[discard_index2]
 
         else:
             end = len(hand)
             discard_index = random.randint(0, end)
-            discard_index2 = random.randint(0, end)
-            if discard_index == discard_index2:
-                discard_index2 += 1
+            discard_index2 = random.randint(0, end - 1)
             return hand[discard_index], hand[discard_index2]
 
     def pegging_move(self, hand, sequence, current_sum):
