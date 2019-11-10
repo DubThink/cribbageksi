@@ -35,15 +35,6 @@ class CribbageAgent:
         """
         paired = []
         for current in range(0, len(hand), 1):
-            # if current < len(hand) + 1:
-            #     next = current + 1
-            # current_card = hand[current]
-            # next_card = hand[next]
-            # (current_suit, current_value) = current_card
-            # (next_suit, next_value) = next_card
-            # if current_value == next_value:
-            #     num_pair += 1
-
             current_card = hand[current]
             (current_suit, current_value) = current_card
             for compare in range(current + 1, len(hand), 1):
