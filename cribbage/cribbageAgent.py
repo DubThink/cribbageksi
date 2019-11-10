@@ -27,6 +27,35 @@ class CribbageAgent:
                 discard_index2 += 1
             return hand[discard_index], hand[discard_index2]
 
+    def is_pair(self, hand):
+        """
+        Looks through hand, finds possible pairs
+        :param hand: a list of tuples, each tuple contains the suit of the card and the value of the card
+        :return: a set of pairs of cards, ordered next to one another
+        """
+        paired = []
+        for current in range(0, len(hand), 1):
+            # if current < len(hand) + 1:
+            #     next = current + 1
+            # current_card = hand[current]
+            # next_card = hand[next]
+            # (current_suit, current_value) = current_card
+            # (next_suit, next_value) = next_card
+            # if current_value == next_value:
+            #     num_pair += 1
+
+            current_card = hand[current]
+            (current_suit, current_value) = current_card
+            for compare in range(current + 1, len(hand), 1):
+                compare_card = hand[compare]
+                (compare_suit, compare_value) = compare_card
+                if compare_value == current_value:
+                    paired.append(current_card)
+                    paired.append(compare_card)
+                    break
+
+        return paired
+
     def pegging_move(self, hand, sequence, current_sum):
         """
         Chooses a card to play during pegging
