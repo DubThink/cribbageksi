@@ -70,3 +70,5 @@ fabric.properties
 
 # python
 cribbage/__pycache__/*
+
+.idea/*
