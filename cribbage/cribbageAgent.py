@@ -1,6 +1,9 @@
 import random
 import heapq
 
+from cribbage.deck import peg_val
+
+
 class CribbageAgent:
 
     def discard_crib(self, hand, is_dealer):
@@ -35,7 +38,10 @@ class CribbageAgent:
         :param current_sum: the current sum on the table
         :return: a single Card
         """
-        pass
+        while True:
+            c = random.choice(hand)
+            if peg_val(c)+current_sum<=31:
+                return c
 
     def score_hand(self, hand4cards, cutcard):
         """
