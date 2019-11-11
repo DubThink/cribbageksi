@@ -38,10 +38,21 @@ class CribbageAgent:
         :param current_sum: the current sum on the table
         :return: a single Card
         """
-        while True:
-            c = random.choice(hand)
-            if peg_val(c)+current_sum<=31:
-                return c
+        # Goals for pegging agent:
+        # Get sum to 15
+        for i in hand:
+            if i + current_sum == 15:
+                return i
+        # Play card with same rank as previously played
+        for i in hand:
+            if sequence[len(sequence - 1)] == i:
+                return i
+        # Sequence of 3, 4, or 5
+        for i in hand:
+            if i + 1 == sequence[len(sequence) - 1]:
+                return i
+        return hand[0]
+
 
     def score_hand(self, hand4cards, cutcard):
         """
