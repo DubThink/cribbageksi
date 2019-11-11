@@ -1,19 +1,12 @@
-from cribbage.deck import Deck, Suit
-
+from cribbage import cribbageAgent
 import unittest
-from cribbage.cribbageAgent import CribbageAgent
-from cribbage.cribbageGame import CribbageGame, IllegalMoveException
 
-class AgentTest(unittest.TestCase):
+class TestAgent(unittest.TestCase):
 
-    def peggingTest(self):
-        # Test of agent pegging move
-
-
+    def test_is_pair(self):
+        hand_example = [("s", 6), ("a", 6), ("k", 4), ("s", 4), ("c", 3), ("d", 3)]
+        hand_example2 = [("s", 6), ("k", 4), ("a", 6), ("s", 4), ("c", 6), ("d", 6)]
+        hand_example3 = [("a", 6), ("b", 4), ("c", 6), ("d", 6), ("e", 4), ("a", 5)]
 
 
 
-
-
-if __name__ == '__main__':
-    unittest.main()

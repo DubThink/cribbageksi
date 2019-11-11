@@ -1,8 +1,6 @@
 import random
 import heapq
 
-from cribbage.deck import peg_val
-
 
 class CribbageAgent:
 
@@ -30,6 +28,26 @@ class CribbageAgent:
                 discard_index2 += 1
             return hand[discard_index], hand[discard_index2]
 
+    def is_pair(self, hand):
+        """
+        Looks through hand, finds possible pairs
+        :param hand: a list of tuples, each tuple contains the suit of the card and the value of the card
+        :return: a set of pairs of cards, ordered next to one another
+        """
+        paired = []
+        for current in range(0, len(hand), 1):
+            current_card = hand[current]
+            (current_suit, current_value) = current_card
+            for compare in range(current + 1, len(hand), 1):
+                compare_card = hand[compare]
+                (compare_suit, compare_value) = compare_card
+                if compare_value == current_value:
+                    paired.append(current_card)
+                    paired.append(compare_card)
+                    break
+
+        return paired
+
     def pegging_move(self, hand, sequence, current_sum):
         """
         Chooses a card to play during pegging
@@ -38,21 +56,7 @@ class CribbageAgent:
         :param current_sum: the current sum on the table
         :return: a single Card
         """
-        # Goals for pegging agent:
-        # Get sum to 15
-        for i in hand:
-            if i + current_sum == 15:
-                return i
-        # Play card with same rank as previously played
-        for i in hand:
-            if sequence[len(sequence - 1)] == i:
-                return i
-        # Sequence of 3, 4, or 5
-        for i in hand:
-            if i + 1 == sequence[len(sequence) - 1]:
-                return i
-        return hand[0]
-
+        pass
 
     def score_hand(self, hand4cards, cutcard):
         """
