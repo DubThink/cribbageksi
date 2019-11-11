@@ -1,6 +1,7 @@
 import random
 import heapq
 
+
 class CribbageAgent:
 
     def discard_crib(self, hand, is_dealer):
