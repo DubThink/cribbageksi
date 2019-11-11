@@ -13,16 +13,16 @@ class CribbageAgent:
         # if I am dealer, I get the crib
         if is_dealer:
             end = len(hand)
-            discard_index = random.randint(0, end)
-            discard_index2 = random.randint(0, end)
+            discard_index = random.randint(0, end-1)
+            discard_index2 = random.randint(0, end-2)
             if discard_index == discard_index2:
                 discard_index2 += 1
             return hand[discard_index], hand[discard_index2]
 
         else:
             end = len(hand)
-            discard_index = random.randint(0, end)
-            discard_index2 = random.randint(0, end)
+            discard_index = random.randint(0, end-1)
+            discard_index2 = random.randint(0, end-2)
             if discard_index == discard_index2:
                 discard_index2 += 1
             return hand[discard_index], hand[discard_index2]
