@@ -70,7 +70,26 @@ class CribbageAgent:
         :param current_sum: the current sum on the table
         :return: a single Card
         """
-        pass
+        print("seq:", sequence)
+        print("hand: ", hand)
+        # Get sum to 15
+        for i in hand:
+            #print(i)
+            if i[0] + current_sum == 15:
+                return i
+
+        # Play same rank
+        if len(sequence) > 0:
+            check = sequence[len(sequence) - 1]
+            for i in hand:
+                if i == check:
+                    return i
+
+        # Find a card to play that doesn't put sum over 31
+        for i in hand:
+            if i[0] + current_sum <= 31:
+                return i
+
 
     def score_hand(self, hand4cards, cutcard):
         """
