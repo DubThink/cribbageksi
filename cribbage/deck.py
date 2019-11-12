@@ -9,6 +9,41 @@ class Suit(Enum):
     DIAMONDS = 4
 
 
+CARD_VALUE_STRINGS = {
+    11:"Jack",
+    12:"Queen",
+    13:"King",
+    1:"Ace",
+    2:"Two",
+    3:"Three",
+    4:"Four",
+    5:"Five",
+    6:"Six",
+    7:"Seven",
+    8:"Eight",
+    9:"Nine",
+    10:"Ten"
+}
+
+SUIT_STRINGS = {
+    Suit.SPADES:"Spades",
+    Suit.HEARTS:"Hearts",
+    Suit.CLUBS:"Clubs",
+    Suit.DIAMONDS:"Diamonds"
+}
+
+
+def card_to_string(card):
+    if card[0] in CARD_VALUE_STRINGS and card[1] in SUIT_STRINGS:
+        return CARD_VALUE_STRINGS[card[0]] +" of "+SUIT_STRINGS[card[1]]
+    else:
+        raise Exception("Invalid card: "+card)
+
+
+def peg_val(card):
+    return 10 if card[0]>10 else card[0]
+
+
 class Deck:
 
     def __init__(self):
