@@ -6,6 +6,7 @@ class CribbageAgent:
 
     def discard_crib(self, hand, is_dealer):
         """
+        Thy
         Discards two cards from a hand of 6
         :param hand: 6 cards
         :param is_dealer: if the player is the dealer, and will receive the crib
@@ -30,6 +31,7 @@ class CribbageAgent:
 
     def is_pair(self, hand):
         """
+        Thy
         Looks through hand, finds possible pairs
         :param hand: a list of tuples, each tuple contains the suit of the card and the value of the card
         :return: a set of pairs of cards, ordered next to one another
@@ -47,6 +49,18 @@ class CribbageAgent:
                     break
 
         return paired
+
+    def is_pair_royal(self, hand):
+        royal = []
+        for current in range(len(hand)):
+            current_card = hand[current]
+            (current_suit, current_value) = current_card
+            royal.append(current_card)
+            for compare in range(current + 1, len(hand), 1):
+                compare_card = hand[compare]
+                (compare_suit, compare_value) = compare_card
+                if compare_value == current_value and compare_card not in royal:
+                    royal.append(compare_card)
 
     def pegging_move(self, hand, sequence, current_sum):
         """
