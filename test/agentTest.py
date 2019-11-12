@@ -10,6 +10,6 @@ class TestAgent(unittest.TestCase):
 
         no_pair_example = [("s", 2), ("a", 3), ("d", 1), ("c", 4), ("e", 5), ("s", 6)]
 
-        for
+
 
 
