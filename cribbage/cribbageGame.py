@@ -67,6 +67,10 @@ class CribbageGame:
         if discard_b[0] == discard_b[1]:
             raise IllegalMoveException("Agent discarded the same card twice.")
         crib = [discard_a[0],discard_a[1],discard_b[0],discard_b[1]]
+        hand_a.remove(discard_a[0])
+        hand_a.remove(discard_a[1])
+        hand_b.remove(discard_b[0])
+        hand_b.remove(discard_b[1])
 
         # cut card
         cut_card = deck.drawCard()
