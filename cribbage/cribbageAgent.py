@@ -56,7 +56,27 @@ class CribbageAgent:
         :param current_sum: the current sum on the table
         :return: a single Card
         """
-        pass
+        print(hand)
+        print(sequence)
+        #print(hand)
+        #return hand[0]
+        #print(hand)
+        for i in hand:
+            #print(i)
+            if i[0] + current_sum == 15:
+                return i
+            # Play card with same rank as previously played
+        # for i in hand:
+        #     if sequence[len(sequence - 1)][0][0] == i[0]:
+        #         return i
+        #     # Sequence of 3, 4, or 5
+        # for i in hand:
+        #     if i[0] + 1 == sequence[len(sequence) - 1]:
+        #         return i
+        for i in hand:
+            if i[0] + current_sum < 31:
+                return i
+        #return hand[0]
 
     def score_hand(self, hand4cards, cutcard):
         """
