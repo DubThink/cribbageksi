@@ -1,14 +1,29 @@
 from cribbage import cribbageAgent
 import unittest
 
+hand1 = [(3, 2), (9, 1), (10, 4), (6, 1), (9, 2), (5, 1)]
+testAgent = cribbageAgent.CribbageAgent()
+
 class TestAgent(unittest.TestCase):
 
-    def test_is_pair(self):
-        hand_example = [("s", 6), ("a", 6), ("k", 4), ("s", 4), ("c", 3), ("d", 3)]
-        hand_example2 = [("s", 6), ("k", 4), ("a", 6), ("s", 4), ("c", 6), ("d", 6)]
-        hand_example3 = [("a", 6), ("b", 4), ("c", 6), ("d", 6), ("e", 4), ("a", 5)]
+    def test_random_discard_card(self):
 
-        no_pair_example = [("s", 2), ("a", 3), ("d", 1), ("c", 4), ("e", 5), ("s", 6)]
+        (discard1, discard2) = testAgent.discard_crib(hand1, True)
+        passing = True
+        if discard1 not in hand1:
+            passing = False
+        if discard2 not in hand1:
+            passing = False
+        assert passing
+
+    def test_what_if(self):
+        cases = testAgent.what_if(hand1)
+        assert not len(cases) == 0
+
+
+
+
+
 
 
 
