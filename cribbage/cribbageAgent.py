@@ -4,6 +4,9 @@ import heapq
 
 class CribbageAgent:
 
+    def __init__(self):
+        self.score = 0
+
     def discard_crib(self, hand, is_dealer):
         """
         Thy
@@ -49,18 +52,6 @@ class CribbageAgent:
                     break
 
         return paired
-
-    def is_pair_royal(self, hand):
-        royal = []
-        for current in range(len(hand)):
-            current_card = hand[current]
-            (current_suit, current_value) = current_card
-            royal.append(current_card)
-            for compare in range(current + 1, len(hand), 1):
-                compare_card = hand[compare]
-                (compare_suit, compare_value) = compare_card
-                if compare_value == current_value and compare_card not in royal:
-                    royal.append(compare_card)
 
     def pegging_move(self, hand, sequence, current_sum):
         """
