@@ -1,5 +1,6 @@
 import random
 import heapq
+from cribbage.deck import card_to_string
 
 
 class CribbageAgent:
@@ -61,8 +62,8 @@ class CribbageAgent:
         :param current_sum: the current sum on the table
         :return: a single Card
         """
-        print("seq:", sequence)
-        print("hand: ", hand)
+        # print("seq:", sequence)
+        # print("hand: ", hand)
         # Get sum to 15
         for i in hand:
             #print(i)
@@ -82,3 +83,15 @@ class CribbageAgent:
                 return i
 
 
+class HumanAgent(CribbageAgent):
+    def discard_crib(self, hand, is_dealer):
+        print("You are the dealer" if is_dealer else "You are not the dealer")
+        print("hand: ",", ".join([card_to_string(c) for c in hand]))
+        n1 = int(input("discard 1-6 >"))
+        n2 = int(input("discard 1-6 >"))
+        return [hand[n1-1],hand[n2-1]]
+
+    def pegging_move(self, hand, sequence, current_sum):
+        print("hand: ",", ".join([card_to_string(c) for c in hand]))
+        n1 = int(input("play 1-%d >"%len(hand)))
+        return hand[n1-1]
