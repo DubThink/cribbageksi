@@ -100,7 +100,7 @@ class CribbageAgent:
 
             first_removed = copyhand[i]
             copyhand.remove(first_removed)
-            for j in range(i, len(hand)):
+            for j in range(i, len(copyhand)):
                 copyhand2 = deepcopy(copyhand)
                 second_removed = copyhand[j]
                 copyhand2.remove(second_removed)
