@@ -8,11 +8,15 @@ class TestAgent(unittest.TestCase):
         testAgent = cribbageAgent.CribbageAgent()
 
         hand1 = [(3, 2), (9, 1), (10, 4), (6, 1), (9, 2), (5, 1)]
-        (discard1, discard2) = testAgent.discard_crib(hand1)
-        assert discard1 < len(hand1)
-        assert discard1 >= 0
-        assert discard2 < len(hand1)
-        assert discard2 >= 0
+        (discard1, discard2) = testAgent.discard_crib(hand1, True)
+        passing = True
+        if discard1 not in hand1:
+            passing = False
+        if discard2 not in hand1:
+            passing = False
+        assert passing
+        
+
 
 
 
