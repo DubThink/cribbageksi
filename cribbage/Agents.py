@@ -49,12 +49,12 @@ class GreedyCribbageAgent:
         :param is_dealer: whether the player is the dealer
         :return: the tuple of 2 cards to discard
         """
-        possible_choices = self.what_if(hand)
+        possible_choices = self.bfs(hand)
         highest_score_hand = heapq.heappop(possible_choices)
         (first_index, second_index) = highest_score_hand
         return hand[first_index], hand[second_index]
 
-    def what_if(self, hand):
+    def bfs(self, hand):
         """
         Thy
         Generates a priority queue based on 4-card hand scores with different permutations of 2 discarded cards
