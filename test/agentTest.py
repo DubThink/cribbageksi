@@ -1,8 +1,8 @@
-from cribbage import cribbageAgent
+from cribbage import Agents
 import unittest
 
 hand1 = [(3, 2), (9, 1), (10, 4), (6, 1), (9, 2), (5, 1)]
-testAgent = cribbageAgent.CribbageAgent()
+testAgent = Agents.CribbageAgent()
 
 class TestAgent(unittest.TestCase):
 

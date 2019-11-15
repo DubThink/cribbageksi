@@ -1,5 +1,5 @@
 from cribbage.deck import Deck, Suit
-from cribbage.cribbageAgent import CribbageAgent, HumanAgent
+from cribbage.Agents import CribbageAgent, HumanAgent
 from cribbage.cribbageGame import CribbageGame
 
 

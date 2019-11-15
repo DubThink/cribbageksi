@@ -5,7 +5,7 @@ from copy import deepcopy
 import cribbage.scoreHand as scorer
 
 
-class CribbageAgent:
+class RandomCribbageAgent:
 
     def __init__(self):
         self.score = 0
@@ -34,6 +34,12 @@ class CribbageAgent:
             if discard_index == discard_index2:
                 discard_index2 += 1
             return hand[discard_index], hand[discard_index2]
+
+
+class GreedyCribbageAgent:
+
+    def __init__(self):
+        self.score = 0
 
     def find_pair(self, hand):
         """
@@ -140,7 +146,7 @@ class CribbageAgent:
                 return i
 
 
-class HumanAgent(CribbageAgent):
+class HumanAgent():
     def discard_crib(self, hand, is_dealer):
         print("You are the dealer" if is_dealer else "You are not the dealer")
         print("hand: ",", ".join([card_to_string(c) for c in hand]))
