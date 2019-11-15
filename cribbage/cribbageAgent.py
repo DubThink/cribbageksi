@@ -161,15 +161,17 @@ class CribbageAgent:
 
 
 def score_hand(self, hand4cards, cutcard):
-    class HumanAgent(CribbageAgent):
-        def discard_crib(self, hand, is_dealer):
-            print("You are the dealer" if is_dealer else "You are not the dealer")
-            print("hand: ",", ".join([card_to_string(c) for c in hand]))
-            n1 = int(input("discard 1-6 >"))
-            n2 = int(input("discard 1-6 >"))
-            return [hand[n1-1],hand[n2-1]]
+    pass
 
-        def pegging_move(self, hand, sequence, current_sum):
-            print("hand: ",", ".join([card_to_string(c) for c in hand]))
-            n1 = int(input("play 1-%d >"%len(hand)))
-            return hand[n1-1]
+class HumanAgent(CribbageAgent):
+    def discard_crib(self, hand, is_dealer):
+        print("You are the dealer" if is_dealer else "You are not the dealer")
+        print("hand: ",", ".join([card_to_string(c) for c in hand]))
+        n1 = int(input("discard 1-6 >"))
+        n2 = int(input("discard 1-6 >"))
+        return [hand[n1-1],hand[n2-1]]
+
+    def pegging_move(self, hand, sequence, current_sum):
+        print("hand: ",", ".join([card_to_string(c) for c in hand]))
+        n1 = int(input("play 1-%d >"%len(hand)))
+        return hand[n1-1]
