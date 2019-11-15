@@ -58,6 +58,25 @@ class CribbageAgent:
         """
         print("seq:", sequence)
         print("hand: ", hand)
+        # Check 4th card sequence
+        # Any consecutive sequence of cards, play 4th sequence
+        if len(sequence) > 3:
+            cards = [sequence[len(sequence) - 1][0], sequence[len(sequence) - 2][0], sequence[len(sequence) - 3][0]]
+            cards.sort()
+            if cards[0] + 1 in cards and cards[1] + 1 in cards:
+                for i in hand:
+                    if i[0] == cards[len(cards) - 1] + 1:
+                        return i
+
+        #Check 3rd card sequence
+        if len(sequence) > 2:
+            cards = [sequence[len(sequence) - 1][0], sequence[len(sequence) - 2][0]]
+            cards.sort()
+            if cards[0] + 1 in cards:
+                for i in hand:
+                    if i[0] == cards[len(cards) - 1] + 1:
+                        return i
+
         # Get sum to 15
         for i in hand:
             #print(i)
