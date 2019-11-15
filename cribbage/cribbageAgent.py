@@ -1,11 +1,19 @@
 import random
 import heapq
+from cribbage.deck import card_to_string
+from cribbage.deck import card_to_string
+from copy import deepcopy
+import cribbage.scoreHand as scorer
 
 
 class CribbageAgent:
 
+    def __init__(self):
+        self.score = 0
+
     def discard_crib(self, hand, is_dealer):
         """
+        Thy
         Discards two cards from a hand of 6
         :param hand: 6 cards
         :param is_dealer: if the player is the dealer, and will receive the crib
@@ -28,8 +36,9 @@ class CribbageAgent:
                 discard_index2 += 1
             return hand[discard_index], hand[discard_index2]
 
-    def is_pair(self, hand):
+    def find_pair(self, hand):
         """
+        Thy
         Looks through hand, finds possible pairs
         :param hand: a list of tuples, each tuple contains the suit of the card and the value of the card
         :return: a set of pairs of cards, ordered next to one another
@@ -37,16 +46,71 @@ class CribbageAgent:
         paired = []
         for current in range(0, len(hand), 1):
             current_card = hand[current]
-            (current_suit, current_value) = current_card
+            (current_value, current_suit) = current_card
             for compare in range(current + 1, len(hand), 1):
                 compare_card = hand[compare]
-                (compare_suit, compare_value) = compare_card
+                (compare_value, compare_suit) = compare_card
                 if compare_value == current_value:
                     paired.append(current_card)
                     paired.append(compare_card)
                     break
 
         return paired
+
+    def discard_two(self, hand, index1, index2):
+        """
+        Thy
+        Takes a 6-card hand, removes cards at index1 and index2
+        :param hand: 6-card hand which is a list of tuples, each tuple (1 card) contains the value and the suit of the card
+        :param index1: index of the first card to remove
+        :param index2: index of the second card to remove
+        :return: a 4-card hand without the removed cards,
+                 a 6-card hand IF EITHER of the indices is out of range
+        """
+        if index1 >= len(hand) or index2 >= len(hand):
+            return hand
+
+        else:
+            hand.remove(hand[index1])
+            hand.remove(hand[index2])
+            return hand
+
+    def what_if(self, hand):
+        """
+        Thy
+        Generates a priority queue based on 4-card hand scores with different permutations of 2 discarded cards
+        :param hand: 6-card hand
+        :return: a priority queue of 4-card hand based on their scores
+        """
+        priorityq = []
+        possible_cut_cards = [(1, 1), (1, 2), (1, 3), (1, 4),
+                              (2, 1), (2, 2), (2, 3), (2, 4),
+                              (3, 1), (3, 2), (3, 3), (3, 4),
+                              (4, 1), (4, 2), (4, 3), (4, 4),
+                              (5, 1), (5, 2), (5, 3), (5, 4),
+                              (6, 1), (6, 2), (6, 3), (6, 4),
+                              (7, 1), (7, 2), (7, 3), (7, 4),
+                              (8, 1), (8, 2), (8, 3), (8, 4),
+                              (9, 1), (9, 2), (9, 3), (9, 4),
+                              (10, 1), (10, 2), (10, 3), (10, 4),
+                              (11, 1), (11, 2), (11, 3), (11, 4),
+                              (12, 1), (12, 2), (12, 3), (12, 4),
+                              (13, 1), (13, 2), (13, 3), (13, 4)]
+        for i in range(len(hand)):
+            copyhand = deepcopy(hand)
+
+            first_removed = copyhand[i]
+            copyhand.remove(first_removed)
+            for j in range(i, len(copyhand)):
+                copyhand2 = deepcopy(copyhand)
+                second_removed = copyhand[j]
+                copyhand2.remove(second_removed)
+
+                for cut_card in possible_cut_cards:
+                    points = scorer.score_hand(copyhand2, cut_card)
+                    heapq.heappush(priorityq, (points, copyhand2))
+
+        return priorityq
 
     def pegging_move(self, hand, sequence, current_sum):
         """
@@ -68,7 +132,7 @@ class CribbageAgent:
                     if i[0] == cards[len(cards) - 1] + 1:
                         return i
 
-        #Check 3rd card sequence
+        # Check 3rd card sequence
         if len(sequence) > 2:
             cards = [sequence[len(sequence) - 1][0], sequence[len(sequence) - 2][0]]
             cards.sort()
@@ -79,7 +143,7 @@ class CribbageAgent:
 
         # Get sum to 15
         for i in hand:
-            #print(i)
+            # print(i)
             if i[0] + current_sum == 15:
                 return i
 
@@ -96,92 +160,16 @@ class CribbageAgent:
                 return i
 
 
-    def score_hand(self, hand4cards, cutcard):
-        """
-        Returns the point value of a 4 card hand with the given cut card
-        :param hand4cards: the 4 cards in the player's hand
-        :param cutcard: cut card
-        :return: integer point value of the hand
-        """
+def score_hand(self, hand4cards, cutcard):
+    class HumanAgent(CribbageAgent):
+        def discard_crib(self, hand, is_dealer):
+            print("You are the dealer" if is_dealer else "You are not the dealer")
+            print("hand: ",", ".join([card_to_string(c) for c in hand]))
+            n1 = int(input("discard 1-6 >"))
+            n2 = int(input("discard 1-6 >"))
+            return [hand[n1-1],hand[n2-1]]
 
-        points = 0
-
-        # create list of sorted 5 card hand
-
-        hand_queue = []
-        hand4cards.append(cutcard)
-        for i in range(5):
-            heapq.heappush(hand_queue, hand4cards[i])
-        sorted5cards = heapq.nlargest(5, hand_queue)
-
-        # right jack
-        for card in sorted5cards:
-            if card[1] == 11 and cutcard[2] == card[2]:  # if card in hand is a Jack and its suit matches the cut card
-                points += 1
-
-        # flushes
-        if hand4cards[0][1] == hand4cards[1][1] == hand4cards[2][1] == hand4cards[3][1] == hand4cards[4][1]:
-            points += 4
-            if hand4cards[0][1] == cutcard[1]:
-                points += 1
-
-        # 15's
-        start_card_index = 0
-        while start_card_index < 4:
-            index = start_card_index + 1
-            for i in range(index, 5):
-                if sorted5cards[start_card_index][0] + sorted5cards[i][0] == 15:
-                    points += 2
-            start_card_index += 1
-
-        # runs
-        if sorted5cards[0][0] == sorted5cards[1][0] - 1 == sorted5cards[2][0] - 2:
-            points += 3
-            if sorted5cards[2][0] == sorted5cards[3][0] - 1:
-                points += 1
-                if sorted5cards[3][0] == sorted5cards[4][0] - 1:
-                    points += 1
-        elif sorted5cards[1][0] == sorted5cards[2][0] - 1 == sorted5cards[3][0] - 2:
-            points += 3
-            if sorted5cards[3][0] == sorted5cards[4][0] - 1:
-                points += 1
-        elif sorted5cards[2][0] == sorted5cards[3][0] - 1 == sorted5cards[4][0] - 2:
-            points += 3
-
-        # pairs/3 of a kind/4 of a kind
-        currentIndex = 0
-        while currentIndex < 4:
-            addToIndex = 0
-            if currentIndex == 0 or currentIndex == 1:
-                if sorted5cards[currentIndex][0] == sorted5cards[currentIndex + 1][0] == sorted5cards[currentIndex + 2][
-                    0] == \
-                        sorted5cards[currentIndex + 3][0]:
-                    addToIndex = 4
-                    points += 4
-                elif sorted5cards[currentIndex][0] == sorted5cards[currentIndex + 1][0] == \
-                        sorted5cards[currentIndex + 2][0]:
-                    addToIndex = 3
-                    points += 3
-                elif sorted5cards[currentIndex][0] == sorted5cards[currentIndex + 1][0]:
-                    addToIndex = 2
-                    points += 2
-                else:
-                    addToIndex = 1
-            if currentIndex == 2:
-                if sorted5cards[currentIndex][0] == sorted5cards[currentIndex + 1][0] == sorted5cards[currentIndex + 2][
-                    0]:
-                    addToIndex = 3
-                    points += 3
-                elif sorted5cards[currentIndex][0] == sorted5cards[currentIndex + 1][0]:
-                    addToIndex = 2
-                    points += 2
-                else:
-                    addToIndex = 1
-            if currentIndex == 3:
-                if sorted5cards[currentIndex][0] == sorted5cards[currentIndex + 1][0]:
-                    addToIndex = 2
-                    points += 2
-                else:
-                    addToIndex = 1
-            currentIndex += addToIndex
-        return points
+        def pegging_move(self, hand, sequence, current_sum):
+            print("hand: ",", ".join([card_to_string(c) for c in hand]))
+            n1 = int(input("play 1-%d >"%len(hand)))
+            return hand[n1-1]
