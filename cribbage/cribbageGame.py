@@ -34,7 +34,12 @@ class CribbageGame:
         self.agent_b = agent_b
         self.a_score = 0
         self.b_score = 0
-        self.verbose=True
+        self.verbose = True
+
+    def play_game(self):
+        a_is_dealer = True
+        while not self.run_round(a_is_dealer):
+            a_is_dealer = not a_is_dealer
 
     def run_round(self, a_is_dealer):
         """
@@ -76,10 +81,63 @@ class CribbageGame:
         cut_card = deck.drawCard()
         if self.verbose:
             print("The cut card is the",card_to_string(cut_card))
-        if cut_card[0] is 11: # if the a jack is turned
+        if cut_card[0] is 11:  # if the a jack is turned
             self.score_points(2, "His heels", a_is_dealer)
 
-        self.pegging(hand_a,hand_b,a_is_dealer)
+        if self.pegging(hand_a, hand_b, a_is_dealer):
+            return True
+
+        self.print_scores()
+
+        if a_is_dealer:
+            print("B's hand:")
+            print(", ".join([card_to_string(c) for c in hand_b]))
+            self.score_hand(hand_b, cut_card, False)
+        else:
+            print("A's hand:")
+            print(", ".join([card_to_string(c) for c in hand_a]))
+            self.score_hand(hand_b, cut_card, True)
+
+        if self.game_over():
+            return True
+
+        print("The crib, which belongs to %s:" % ("A" if a_is_dealer else "B"))
+        self.score_hand(crib, cut_card, a_is_dealer, True)
+
+        if self.game_over():
+            return True
+
+        if not a_is_dealer:
+            print("B's hand:")
+            print(", ".join([card_to_string(c) for c in hand_b]))
+            self.score_hand(hand_b, cut_card, False)
+        else:
+            print("A's hand:")
+            print(", ".join([card_to_string(c) for c in hand_a]))
+            self.score_hand(hand_b, cut_card, True)
+
+        if self.game_over():
+            return True
+
+        self.print_scores()
+
+        return False
+
+    def game_over(self):
+        if self.a_score>120:
+            winner = "A"
+        elif self.b_score>120:
+            winner = "B"
+        else:
+            return False
+        print("GAME OVER!")
+        print(winner + "passed a score of 120 to win.")
+        self.print_scores()
+        return True
+
+    def print_scores(self):
+        if self.verbose:
+            print("Scores:\nA: %d\nB: %d\n" % (self.a_score, self.b_score))
 
     def score_points(self,amount, reason, is_a):
         if is_a:
@@ -94,6 +152,7 @@ class CribbageGame:
         :param hand_a: the hand of player a. Must be a copy/mutable
         :param hand_b: the hand of player b. Must be a copy/mutable
         :param is_a: a starts the pegging
+        :returns true if the game was won
         """
         #
         # next_player = hand_b if a_goes_first else hand_a
@@ -108,7 +167,7 @@ class CribbageGame:
                 pick = player.pegging_move(deepcopy(hand), deepcopy(seq), total)
                 # a card should be played
                 if pick is None:
-                    raise IllegalMoveException("Must play a card if able to")
+                    raise IllegalMoveException("Must play a card if able to. data:"+str((deepcopy(hand), deepcopy(seq), total)))
                 if pick not in hand:
                     raise IllegalMoveException("Must play a card from your hand")
                 if peg_val(pick) + total > 31:
@@ -121,9 +180,13 @@ class CribbageGame:
                     # print("total:", total)
                     # print("sequence:", ", ".join([card_to_string(c) for c in seq]))
                 self.score_pegging(seq, total, is_a)
+                if self.game_over():
+                    return True
             if not can_peg(hand_a,total) and not can_peg(hand_b,total):
                 # neither person can go
                 self.score_points(1,"Last card", is_a)
+                if self.game_over():
+                    return True
                 total=0
                 seq=[]
 
@@ -131,7 +194,7 @@ class CribbageGame:
 
             if len(hand_a) == 0 and len(hand_b) == 0:
                 # pegging is finished
-                return
+                return False
 
     def score_pegging(self, seq, total, is_a):
         """
@@ -145,7 +208,7 @@ class CribbageGame:
             return
         if total == 15:
             self.score_points(2,"Fifteen", is_a)
-        if total == 21:
+        if total == 31:
             self.score_points(1,"Thirty one",is_a)
         run_up=0
         run_down=0
@@ -177,6 +240,9 @@ class CribbageGame:
         return 0
 
     def pegging_round(self,hand_a,hand_b,a_goes_first):
+        pass
+
+    def score_hand(self, hand4cards, cutcard, is_a, is_crib=False):
         pass
 
 

@@ -1,6 +1,6 @@
 import random
 import heapq
-from cribbage.deck import card_to_string
+from cribbage.deck import card_to_string, peg_val
 
 
 class CribbageAgent:
@@ -76,7 +76,7 @@ class CribbageAgent:
         # Get sum to 15
         for i in hand:
             #print(i)
-            if i[0] + current_sum == 15:
+            if peg_val(i) + current_sum == 15:
                 return i
 
         # Play same rank
@@ -88,19 +88,36 @@ class CribbageAgent:
 
         # Find a card to play that doesn't put sum over 31
         for i in hand:
-            if i[0] + current_sum <= 31:
+            if peg_val(i) + current_sum <= 31:
                 return i
+
+
+def get_int_in_range(prompt, a, b):
+    while True:
+        try:
+            n = int(input(prompt+" %d-%d>" % (a, b)))
+        except ValueError:
+            print("Invalid number.")
+            continue
+        if a <= n <= b:
+            return n
+        print("Number not in range")
 
 
 class HumanAgent(CribbageAgent):
     def discard_crib(self, hand, is_dealer):
         print("You are the dealer" if is_dealer else "You are not the dealer")
         print("hand: ",", ".join([card_to_string(c) for c in hand]))
-        n1 = int(input("discard 1-6 >"))
-        n2 = int(input("discard 1-6 >"))
-        return [hand[n1-1],hand[n2-1]]
+        n1 = get_int_in_range("discard card A", 1, 6)
+        while True:
+            n2 = get_int_in_range("discard card B", 1, 6)
+            if n1 != n2:
+                break
+            print("Cannot discard the same card twice.")
+        return [hand[n1-1], hand[n2-1]]
 
     def pegging_move(self, hand, sequence, current_sum):
         print("hand: ",", ".join([card_to_string(c) for c in hand]))
-        n1 = int(input("play 1-%d >"%len(hand)))
+        n1 = get_int_in_range("play card ", 1, len(hand))
+
         return hand[n1-1]
