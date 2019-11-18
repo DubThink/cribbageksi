@@ -50,8 +50,8 @@ class GreedyCribbageAgent:
         :return: the tuple of 2 cards to discard
         """
         possible_choices = self.bfs(hand)
-        highest_score_hand = heapq.heappop(possible_choices)
-        (first_index, second_index) = highest_score_hand
+        highest_score_hand = possible_choices[0]
+        (points, first_index, second_index) = highest_score_hand
         return hand[first_index], hand[second_index]
 
     def bfs(self, hand):

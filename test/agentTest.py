@@ -21,10 +21,6 @@ class RandomAgentTest(unittest.TestCase):
 
 class GreedyAgentTest(unittest.TestCase):
 
-    def test_bfs(self):
-        possible_discards = greedyTestAgent.bfs(hand1)
-        assert not len(possible_discards) == 0
-
     def test_discard_crib(self):
         (discard1, discard2) = greedyTestAgent.discard_crib(hand1, True)
         passing = True
