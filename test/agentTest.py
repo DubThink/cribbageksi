@@ -43,11 +43,15 @@ class GreedyAgentTest(unittest.TestCase):
         Thy
         :return: tests greedy agent's breadth first search function
         """
+        passing = False
         returned_q = greedyTestAgent.bfs(hand1)
         print(returned_q)
         first_choice = returned_q[0]
         (points, index1, index2) = first_choice
         if index1 in range(len(hand1)) and index2 in range(len(hand1)):
-            assert True
+            passing = True
+        if points <= 0:
+            passing = True
+        assert passing
 
 
