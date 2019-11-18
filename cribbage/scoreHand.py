@@ -202,6 +202,7 @@ def expected_hand_value(hand4cards,discard2cards):
     for i in range(14):
         card_counts.append(4)
     six_cards=hand4cards.append(discard2cards[0],discard2cards[1])  #puts the six cards into one list
+
     for card in six_cards:
         value=card[0]
         card_counts[value-1] -= 1      #creates a list of the number of cards of each type left in the deck
