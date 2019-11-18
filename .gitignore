@@ -70,5 +70,6 @@ fabric.properties
 
 # python
 cribbage/__pycache__/*
+/venv
 
 .idea/*
