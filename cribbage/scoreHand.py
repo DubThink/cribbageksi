@@ -1,5 +1,8 @@
 import heapq
 from itertools import combinations
+from cribbage.deck import peg_val
+
+
 
 def score_hand(hand4cards, cutcard):
     """
@@ -79,12 +82,10 @@ def two_card_fifteens(sorted5cards):
     points=0
     index_combinations2 = combinations([0,1,2,3,4], 2)
     for combination in list(index_combinations2):
-        value1 = sorted5cards[combination[0]][0]
-        if value1 in range(11, 14):
-            value1 = 10
-        value2 = sorted5cards[combination[1]][0]
-        if value2 in range(11, 14):
-            value2 = 10
+        card1 = sorted5cards[combination[0]]
+        value1=peg_val(card1)
+        card2 = sorted5cards[combination[1]]
+        value2=peg_val(card2)
         if value1 + value2 == 15:
             points += 2
     return points
@@ -98,15 +99,12 @@ def three_card_fifteens(sorted5cards):
     points=0
     index_combinations3 = combinations([0, 1, 2, 3, 4], 3)
     for combination in list(index_combinations3):
-        value1 = sorted5cards[combination[0]][0]
-        if value1 in range(11, 14):
-            value1 = 10
-        value2 = sorted5cards[combination[1]][0]
-        if value2 in range(11, 14):
-            value2 = 10
-        value3 = sorted5cards[combination[2]][0]
-        if value3 in range(11, 14):
-            value3 = 10
+        card1 = sorted5cards[combination[0]]
+        value1 = peg_val(card1)
+        card2 = sorted5cards[combination[1]]
+        value2 = peg_val(card2)
+        card3 = sorted5cards[combination[2]]
+        value3 = peg_val(card3)
         if value1 + value2 + value3 == 15:
             points += 2
     return points
@@ -120,18 +118,14 @@ def four_card_fifteens(sorted5cards):
     points=0
     index_combinations4 = combinations([0, 1, 2, 3, 4], 4)
     for combination in list(index_combinations4):
-        value1 = sorted5cards[combination[0]][0]
-        if value1 in range(11, 14):
-            value1 = 10
-        value2 = sorted5cards[combination[1]][0]
-        if value2 in range(11, 14):
-            value2 = 10
-        value3 = sorted5cards[combination[2]][0]
-        if value3 in range(11, 14):
-            value3 = 10
-        value4 = sorted5cards[combination[3]][0]
-        if value4 in range(11, 14):
-            value4 = 10
+        card1 = sorted5cards[combination[0]]
+        value1 = peg_val(card1)
+        card2 = sorted5cards[combination[1]]
+        value2 = peg_val(card2)
+        card3 = sorted5cards[combination[2]]
+        value3 = peg_val(card3)
+        card4 = sorted5cards[combination[3]]
+        value4=peg_val(card4)
         if value1 + value2 + value3 + value4 == 15:
             points += 2
     return points
@@ -145,7 +139,8 @@ def five_card_fifteens(sorted5cards):
     points=0
     sum=0
     for i in range(5):
-        sum+=sorted5cards[i][0]
+        card=sorted5cards[i]
+        sum+=peg_val(card)
     if sum==15:
         points+=2
     return points
@@ -197,19 +192,25 @@ def pairs(sorted5cards):
 
 
 def expected_hand_value(hand4cards,discard2cards):
+    """
+      Returns the expected point value of a hand (taking into account all possible cut cards)
+      :param hand4cards: a list of 4 cards the player is keeping
+      :param discard2cards: a list of the 2 cards the player is planning to discard
+      :return: expected point value for the 4 card hand
+      """
     card_counts=[]
     for i in range(14):
         card_counts.append(4)
-    six_cards=hand4cards.append(discard2cards[0],discard2cards[1])
+    six_cards=hand4cards.append(discard2cards[0],discard2cards[1])  #puts the six cards into one list
     for card in six_cards:
         value=card[0]
-        card_counts[value-1] -= 1
+        card_counts[value-1] -= 1      #creates a list of the number of cards of each type left in the deck
 
     expected_value=0
 
     for i in range (14):
-        hand_value=score_hand(hand4cards,(i,1))
-        probability=card_counts[i]/46
-        expected_value += (hand_value*probability)
+        hand_value=score_hand(hand4cards,(i,1))      #gets the score of the hand for each possible cut card (not accounting for suits)
+        probability=card_counts[i]/46                #calculates the probability of drawing that cut card
+        expected_value += (hand_value*probability)   #multiplies the calculated score by the probability of drawing that cut card, adds to total expected value
 
     return expected_value
