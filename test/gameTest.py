@@ -1,7 +1,7 @@
 from cribbage.deck import Deck, Suit
 
 import unittest
-from cribbage.cribbageAgent import CribbageAgent
+from cribbage.Agents import CribbageAgent
 from cribbage.cribbageGame import CribbageGame, IllegalMoveException
 
 

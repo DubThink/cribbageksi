@@ -1,15 +1,41 @@
-from cribbage import cribbageAgent
+from cribbage import Agents
 import unittest
 
-class TestAgent(unittest.TestCase):
+hand1 = [(3, 2), (9, 1), (10, 4), (6, 1), (9, 2), (5, 1)]
 
-    def test_is_pair(self):
-        hand_example = [("s", 6), ("a", 6), ("k", 4), ("s", 4), ("c", 3), ("d", 3)]
-        hand_example2 = [("s", 6), ("k", 4), ("a", 6), ("s", 4), ("c", 6), ("d", 6)]
-        hand_example3 = [("a", 6), ("b", 4), ("c", 6), ("d", 6), ("e", 4), ("a", 5)]
-
-        no_pair_example = [("s", 2), ("a", 3), ("d", 1), ("c", 4), ("e", 5), ("s", 6)]
+randomTestAgent = Agents.RandomCribbageAgent()
+greedyTestAgent = Agents.GreedyCribbageAgent()
 
 
+class RandomAgentTest(unittest.TestCase):
+
+    def test_random_discard_card(self):
+        (discard1, discard2) = randomTestAgent.discard_crib(hand1, True)
+        passing = True
+        if discard1 not in hand1:
+            passing = False
+        if discard2 not in hand1:
+            passing = False
+        assert passing
+
+
+class GreedyAgentTest(unittest.TestCase):
+
+    def test_discard_crib(self):
+        (discard1, discard2) = greedyTestAgent.discard_crib(hand1, True)
+        passing = True
+        if discard1 not in hand1:
+            passing = False
+        if discard2 not in hand1:
+            passing = False
+        assert passing
+
+    def test_bfs(self):
+        returned_q = greedyTestAgent.bfs(hand1)
+        print(returned_q)
+        first_choice = returned_q[0]
+        (points, index1, index2) = first_choice
+        if index1 in range(len(hand1)) and index2 in range(len(hand1)):
+            assert True
 
 

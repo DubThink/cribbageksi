@@ -1,4 +1,5 @@
 import heapq
+from itertools import combinations
 
 def score_hand(hand4cards, cutcard):
     """
@@ -31,36 +32,78 @@ def score_hand(hand4cards, cutcard):
     sorted5cards = heapq.nsmallest(5, hand_queue)
 
 
-    # 15's
-    start_card_index = 0
-    while start_card_index < 4:
-        index = start_card_index + 1
-        for i in range(index, 5):
-            value1 = sorted5cards[start_card_index][0]
-            if value1 in range(11,14):
-                value1 = 10
-            value2 = sorted5cards[i][0]
-            if value2 in range(11,14):
-                value2 = 10
-            if value1 + value2 == 15:
-                points += 2
-        start_card_index += 1
+    #pairs 15's
+    index_combinations2 = combinations([0,1,2,3,4], 2)
+    for combination in list(index_combinations2):
+        value1 = sorted5cards[combination[0]][0]
+        if value1 in range(11, 14):
+            value1 = 10
+        value2 = sorted5cards[combination[1]][0]
+        if value2 in range(11, 14):
+            value2 = 10
+        if value1 + value2 == 15:
+            points += 2
+            
+    #3 card 15's
+    index_combinations3 = combinations([0, 1, 2, 3, 4], 3)
+    for combination in list(index_combinations3):
+        value1 = sorted5cards[combination[0]][0]
+        if value1 in range(11, 14):
+            value1 = 10
+        value2 = sorted5cards[combination[1]][0]
+        if value2 in range(11, 14):
+            value2 = 10
+        value3 = sorted5cards[combination[2]][0]
+        if value3 in range(11, 14):
+            value3 = 10
+        if value1 + value2 + value3 == 15:
+            points += 2
 
+    # 4 card 15's
+    index_combinations4 = combinations([0, 1, 2, 3, 4], 4)
+    for combination in list(index_combinations4):
+        value1 = sorted5cards[combination[0]][0]
+        if value1 in range(11, 14):
+            value1 = 10
+        value2 = sorted5cards[combination[1]][0]
+        if value2 in range(11, 14):
+            value2 = 10
+        value3 = sorted5cards[combination[2]][0]
+        if value3 in range(11, 14):
+            value3 = 10
+        value4 = sorted5cards[combination[3]][0]
+        if value4 in range(11, 14):
+            value4 = 10
+        if value1 + value2 + value3 + value4 == 15:
+            points += 2
 
+    # 5 card 15's
+    sum=0
+    for i in range(5):
+        sum+=sorted5cards[i][0]
+    if sum==15:
+        points+=2
 
     # runs
-    if sorted5cards[0][0] == sorted5cards[1][0] - 1 == sorted5cards[2][0] - 2:
-        points += 3
-        if sorted5cards[2][0] == sorted5cards[3][0] - 1:
-            points += 1
-            if sorted5cards[3][0] == sorted5cards[4][0] - 1:
-                points += 1
-    elif sorted5cards[1][0] == sorted5cards[2][0] - 1 == sorted5cards[3][0] - 2:
-        points += 3
-        if sorted5cards[3][0] == sorted5cards[4][0] - 1:
-            points += 1
-    elif sorted5cards[2][0] == sorted5cards[3][0] - 1 == sorted5cards[4][0] - 2:
-        points += 3
+    for start_index in range(3):
+        next_index=start_index+1
+        consecutive_cards_count = 1
+        duplicates_count = 0
+        while next_index<5:
+            if sorted5cards[start_index][0] == sorted5cards[next_index][0]:
+                duplicates_count += 1
+            elif sorted5cards[start_index][0] == sorted5cards[next_index][0] - 1:
+                consecutive_cards_count += 1
+            else:
+                break
+            start_index = next_index
+            next_index += 1
+        multiplier = 1
+        if duplicates_count > 0:
+            multiplier = duplicates_count+1
+        if consecutive_cards_count >= 3:
+            points += multiplier * consecutive_cards_count
+            break
 
     # pairs/3 of a kind/4 of a kind
     start_card_index = 0
