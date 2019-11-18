@@ -10,6 +10,10 @@ greedyTestAgent = Agents.GreedyCribbageAgent()
 class RandomAgentTest(unittest.TestCase):
 
     def test_random_discard_card(self):
+        """
+        Thy
+        :return: tests random agent's discarding function
+        """
         (discard1, discard2) = randomTestAgent.discard_crib(hand1, True)
         passing = True
         if discard1 not in hand1:
@@ -22,6 +26,10 @@ class RandomAgentTest(unittest.TestCase):
 class GreedyAgentTest(unittest.TestCase):
 
     def test_discard_crib(self):
+        """
+        Thy
+        :return: tests greedy agent's discarding function
+        """
         (discard1, discard2) = greedyTestAgent.discard_crib(hand1, True)
         passing = True
         if discard1 not in hand1:
@@ -31,6 +39,10 @@ class GreedyAgentTest(unittest.TestCase):
         assert passing
 
     def test_bfs(self):
+        """
+        Thy
+        :return: tests greedy agent's breadth first search function
+        """
         returned_q = greedyTestAgent.bfs(hand1)
         print(returned_q)
         first_choice = returned_q[0]

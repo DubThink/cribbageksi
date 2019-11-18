@@ -196,11 +196,11 @@ def pairs(sorted5cards):
     return points
 
 
-def expected_hand_value(hand4cards,discard2cards):
+def expected_hand_value(hand4cards, discard2cards):
     card_counts=[]
     for i in range(14):
         card_counts.append(4)
-    six_cards=hand4cards.append(discard2cards[0],discard2cards[1])
+    six_cards=hand4cards.append(discard2cards[0], discard2cards[1])
     for card in six_cards:
         value=card[0]
         card_counts[value-1] -= 1
