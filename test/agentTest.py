@@ -34,7 +34,12 @@ class GreedyAgentTest(unittest.TestCase):
             passing = False
         assert passing
 
-
-
+    def test_bfs(self):
+        returned_q = greedyTestAgent.bfs(hand1)
+        print(returned_q)
+        first_choice = returned_q[0]
+        (points, index1, index2) = first_choice
+        if index1 in range(len(hand1)) and index2 in range(len(hand1)):
+            assert True
 
 
