@@ -6,7 +6,30 @@ from copy import deepcopy
 import cribbage.scoreHand as scorer
 from itertools import combinations
 
-class RandomCribbageAgent:
+class BaseCribbageAgent:
+
+    def discard_crib(self, hand, is_dealer):
+        """
+        Discards two cards from a hand of 6
+        :param hand: 6 cards
+        :param is_dealer: if the player is the dealer, and will receive the crib
+        :return: 2 cards to discard
+        """
+        raise NotImplementedError()
+
+
+
+    def pegging_move(self, hand, sequence, current_sum):
+        """
+        Chooses a card to play during pegging
+        :param hand: the player's hand
+        :param sequence: the current sequence
+        :param current_sum: the current sum on the table
+        :return: a single Card
+        """
+        raise NotImplementedError()
+
+class RandomCribbageAgent(BaseCribbageAgent):
 
     def __init__(self):
         self.score = 0
@@ -37,7 +60,7 @@ class RandomCribbageAgent:
             return hand[discard_index], hand[discard_index2]
 
 
-class GreedyCribbageAgent:
+class GreedyCribbageAgent(BaseCribbageAgent):
 
     def __init__(self):
         self.score = 0
@@ -126,6 +149,8 @@ class GreedyCribbageAgent:
             if i[0] + current_sum <= 31:
                 return i
 
+<<<<<<< HEAD
+=======
     #
     # def score_hand(hand4cards, cutcard):
     # """
@@ -257,8 +282,24 @@ class GreedyCribbageAgent:
     #     start_card_index = 0
     #
 
+def get_int_in_range(prompt,a,b):
+    ret=None
+    while ret is None:
+        try:
+            ret=int(input(prompt+"(%d-%d)>"%(a,b)))
+        except ValueError:
+            ret = None
+            print("Invalid number")
+            continue
+        if a < ret < b:
+            return ret
+        ret = None
+        print("Number not in range")
 
-class HumanAgent(CribbageAgent):
+
+>>>>>>> f02805cdc872362744407ae3a5f5e69a22bfb604
+
+class HumanAgent(BaseCribbageAgent):
     def discard_crib(self, hand, is_dealer):
         print("You are the dealer" if is_dealer else "You are not the dealer")
         print("hand: ",", ".join([card_to_string(c) for c in hand]))
