@@ -9,9 +9,7 @@ greedyTestAgent = Agents.GreedyCribbageAgent()
 
 class RandomAgentTest(unittest.TestCase):
 
-
     def test_random_discard_card(self):
-
         (discard1, discard2) = randomTestAgent.discard_crib(hand1, True)
         passing = True
         if discard1 not in hand1:
