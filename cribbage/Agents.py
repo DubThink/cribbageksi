@@ -27,7 +27,14 @@ class BaseCribbageAgent:
         :param current_sum: the current sum on the table
         :return: a single Card
         """
-        raise NotImplementedError()
+        # Randomly choose a card that doesn't put sum over 31
+        choices = []
+        for card in hand:
+            if card[0] + current_sum <= 31:
+                choices.append(card)
+        choice = random.randint(0, len(choices) - 1)
+        return choices[choice]
+
 
 class RandomCribbageAgent(BaseCribbageAgent):
 
@@ -144,10 +151,18 @@ class GreedyCribbageAgent(BaseCribbageAgent):
                 if i == check:
                     return i
 
+
         # Find a card to play that doesn't put sum over 31
+        # Try to stop other player from getting sequence
+        cards = []
         for i in hand:
             if i[0] + current_sum <= 31:
+                cards.append(i)
+        for i in cards:
+            if abs(sequence[len(sequence) - 1][0] - i[0]) > 1:
                 return i
+        return cards[0]
+
 
     #
     # def score_hand(hand4cards, cutcard):
@@ -293,6 +308,7 @@ def get_int_in_range(prompt,a,b):
             return ret
         ret = None
         print("Number not in range")
+
 
 
 
