@@ -1,6 +1,6 @@
 import random
 import heapq
-from cribbage.deck import card_to_string
+from cribbage.deck import card_to_string, peg_val
 from cribbage.deck import card_to_string
 from copy import deepcopy
 import cribbage.scoreHand as scorer
@@ -29,8 +29,9 @@ class BaseCribbageAgent:
         """
         # Randomly choose a card that doesn't put sum over 31
         choices = []
+
         for card in hand:
-            if card[0] + current_sum <= 31:
+            if peg_val(card) + current_sum <= 31:
                 choices.append(card)
         choice = random.randint(0, len(choices) - 1)
         return choices[choice]
@@ -158,11 +159,12 @@ class GreedyCribbageAgent(BaseCribbageAgent):
         cards = []
         for i in hand:
             if i[0] + current_sum <= 31:
-                cards.append(i)
-        for i in cards:
-            if abs(sequence[len(sequence) - 1][0] - i[0]) > 1:
                 return i
-        return cards[0]
+        #         cards.append(i)
+        # for i in cards:
+        #     if abs(sequence[len(sequence) - 1][0] - i[0]) > 1:
+        #         return i
+       # return cards[0]
 
 
     #

@@ -168,7 +168,7 @@ class CribbageGame:
                 pick = player.pegging_move(deepcopy(hand), deepcopy(seq), total)
                 # a card should be played
                 if pick is None:
-                    raise IllegalMoveException("Must play a card if able to. data:"+str((deepcopy(hand), deepcopy(seq), total)))
+                    raise IllegalMoveException("Must play a card if able to. data:"+str((deepcopy(hand), deepcopy(seq), total))+"   player "+("A" if is_a else "B"))
                 if pick not in hand:
                     raise IllegalMoveException("Must play a card from your hand")
                 if peg_val(pick) + total > 31:

@@ -3,4 +3,4 @@ from cribbage.cribbageGame import CribbageGame
 
 
 if __name__ == "__main__":
-    CribbageGame(GreedyCribbageAgent(),GreedyCribbageAgent()).play_game()
+    CribbageGame(RandomCribbageAgent(),GreedyCribbageAgent()).play_game()
