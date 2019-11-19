@@ -168,7 +168,7 @@ def runs(sorted5cards):
             next_index += 1
         multiplier = 1
         if duplicates_count > 0:
-            multiplier = duplicates_count+1
+            multiplier = duplicates_count*2
         if consecutive_cards_count >= 3:
             points += multiplier * consecutive_cards_count
             break
