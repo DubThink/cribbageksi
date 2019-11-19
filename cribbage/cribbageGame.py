@@ -1,5 +1,6 @@
 from cribbage.deck import Deck, card_to_string, peg_val
 from copy import deepcopy
+from cribbage.scoreHand import score_hand
 
 PAIR_SCORES={2:("Pair",2),3:("3 of a kind",6),4:("Four of a kind",12)}
 
@@ -88,7 +89,7 @@ class CribbageGame:
             return True
 
         self.print_scores()
-        print("DEBUG",hand_a,hand_b)
+        # print("DEBUG",hand_a,hand_b)
         if a_is_dealer:
             print("B's hand:")
             print(", ".join([card_to_string(c) for c in hand_b]))
@@ -243,7 +244,7 @@ class CribbageGame:
         pass
 
     def score_hand(self, hand4cards, cutcard, is_a, is_crib=False):
-        pass
+        self.score_points(score_hand(hand4cards,cutcard),"Their cards",is_a)
 
 
 class IllegalMoveException(Exception):
