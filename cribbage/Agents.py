@@ -151,10 +151,17 @@ class GreedyCribbageAgent(BaseCribbageAgent):
                 if i == check:
                     return i
 
+
         # Find a card to play that doesn't put sum over 31
+        # Try to stop other player from getting sequence
+        cards = []
         for i in hand:
             if i[0] + current_sum <= 31:
+                cards.append(i)
+        for i in cards:
+            if abs(sequence[len(sequence) - 1][0] - i[0]) > 1:
                 return i
+        return cards[0]
 
 
     #
