@@ -105,7 +105,8 @@ class GreedyCribbageAgent(BaseCribbageAgent):
 
                 for cut_card in possible_cut_cards:
                     points = scorer.score_hand(copyhand2, cut_card)
-                    heapq.heappush(priorityq, (-points, i, j))
+                    if not i == j:
+                        heapq.heappush(priorityq, (-points, i, j))
 
         return priorityq
 
