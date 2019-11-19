@@ -1,7 +1,6 @@
-from cribbage.deck import Deck, Suit
-from cribbage.Agents import CribbageAgent, HumanAgent
+from cribbage.Agents import RandomCribbageAgent, HumanAgent, GreedyCribbageAgent
 from cribbage.cribbageGame import CribbageGame
 
 
 if __name__ == "__main__":
-    CribbageGame(CribbageAgent(),CribbageAgent()).play_game()
+    CribbageGame(GreedyCribbageAgent(),GreedyCribbageAgent()).play_game()

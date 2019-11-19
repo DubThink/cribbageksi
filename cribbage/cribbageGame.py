@@ -84,11 +84,11 @@ class CribbageGame:
         if cut_card[0] is 11:  # if the a jack is turned
             self.score_points(2, "His heels", a_is_dealer)
 
-        if self.pegging(hand_a, hand_b, a_is_dealer):
+        if self.pegging(deepcopy(hand_a), deepcopy(hand_b), a_is_dealer):
             return True
 
         self.print_scores()
-
+        print("DEBUG",hand_a,hand_b)
         if a_is_dealer:
             print("B's hand:")
             print(", ".join([card_to_string(c) for c in hand_b]))
@@ -176,7 +176,7 @@ class CribbageGame:
                 hand.remove(pick)
                 total += peg_val(pick)
                 if self.verbose:
-                    print("%s played the %s for %d" % ("A" if is_a else "B",card_to_string(pick),total))
+                    print("%s played %s for %d" % ("A" if is_a else "B",card_to_string(pick),total))
                     # print("total:", total)
                     # print("sequence:", ", ".join([card_to_string(c) for c in seq]))
                 self.score_pegging(seq, total, is_a)

@@ -110,8 +110,8 @@ class GreedyCribbageAgent(BaseCribbageAgent):
         :param current_sum: the current sum on the table
         :return: a single Card
         """
-        print("seq:", sequence)
-        print("hand: ", hand)
+        # print("seq:", sequence)
+        # print("hand: ", hand)
         # Check 4th card sequence
         # Any consecutive sequence of cards, play 4th sequence
         if len(sequence) > 3:
