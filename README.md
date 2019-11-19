@@ -37,3 +37,10 @@ Thy: implement A* heuristic for bfs for discard crib
 
 Liam: minimax for pegging moves
 
+AI Techniques used: Currently Dijkstra for discarding into the crib and minimax for pegging
+
+Brief description: For discarding, the agent looks at all possible combinations of 2-card permutations to remove, calculates the possible scores for each permutation and enqueues each permutation into a priority queue according to their score. Pegging uses minimax to look at a maximum of depth 4 to calculate the best possible card to put down. 
+
+List of useful resources: previous labs
+
+
