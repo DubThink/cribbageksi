@@ -97,12 +97,13 @@ class CribbageGame:
         else:
             print("A's hand:")
             print(", ".join([card_to_string(c) for c in hand_a]))
-            self.score_hand(hand_b, cut_card, True)
+            self.score_hand(hand_a, cut_card, True)
 
         if self.game_over():
             return True
 
         print("The crib, which belongs to %s:" % ("A" if a_is_dealer else "B"))
+        print(", ".join([card_to_string(c) for c in crib]))
         self.score_hand(crib, cut_card, a_is_dealer, True)
 
         if self.game_over():
@@ -115,7 +116,7 @@ class CribbageGame:
         else:
             print("A's hand:")
             print(", ".join([card_to_string(c) for c in hand_a]))
-            self.score_hand(hand_b, cut_card, True)
+            self.score_hand(hand_a, cut_card, True)
 
         if self.game_over():
             return True
@@ -219,7 +220,7 @@ class CribbageGame:
         top_card=seq[-1]
         for i in range(len(seq)-2,-1,-1):
             if continue_pair:
-                if seq[i] == top_card:
+                if seq[i][0] == top_card[0]:
                     pair += 1
                 else:
                     continue_pair = False

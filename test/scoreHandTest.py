@@ -206,6 +206,11 @@ class TestScoreHand(unittest.TestCase):
         cutcard = (5, 1)
         self.assertEqual(29, score_hand(hand, cutcard))
 
+    def test_it_broke(self):
+        hand = [(4,1),(5,2),(7,3),(11,3)]
+        cutcard = (11,2)
+        self.assertEqual(6,score_hand(hand,cutcard))
+
 
 
 if __name__ == '__main__':
