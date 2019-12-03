@@ -62,6 +62,8 @@ https://www.youtube.com/watch?v=-_Dy5VEsUhE
 
 https://engineering.purdue.edu/~ipollak/ece302/FALL09/notes/Bernoulli_1738.pdf
 
+https://www.youtube.com/watch?v=tCreeXzCNRc
+
 This technique is generally used to evaluate financial situations where there is some degree of uncertainty/risk. It can be used for any situation with a set of outcomes and associated probabilities, including our scenario where our agent is trying to decide which four cards to keep. A potential challenge of applying this technique is that the formulas used to adjust the expected value to account for risk aversion might be a little complicated.
 
 
