@@ -1,4 +1,5 @@
 import heapq
+import math
 from itertools import combinations
 from cribbage.deck import peg_val
 
@@ -197,11 +198,12 @@ def pairs(sorted5cards):
     return points
 
 
-def expected_hand_value(hand4cards,discard2cards):
+def expected_hand_value(hand4cards,discard2cards,risk):
     """
       Returns the expected point value of a hand (taking into account all possible cut cards)
       :param hand4cards: a list of 4 cards the player is keeping
       :param discard2cards: a list of the 2 cards the player is planning to discard
+      :param risk: -1 for risk averse, 0 for risk neutral, 1 for risk loving
       :return: expected point value for the 4 card hand
       """
     card_counts=[]
@@ -217,7 +219,13 @@ def expected_hand_value(hand4cards,discard2cards):
 
     for i in range (14):
         hand_value=score_hand(hand4cards,(i,1),False)      #gets the score of the hand for each possible cut card (not accounting for suits)
+        if risk==-1:
+            hand_value=math.sqrt(hand_value)
+        if risk==1:
+            hand_value=hand_value^2
         probability=card_counts[i]/46                #calculates the probability of drawing that cut card
         expected_value += (hand_value*probability)   #multiplies the calculated score by the probability of drawing that cut card, adds to total expected value
 
     return expected_value
+
+
