@@ -4,17 +4,18 @@ from cribbage.deck import peg_val
 
 
 
-def score_hand(hand4cards, cutcard, Crib):
+def score_hand(hand4cards, cutcard, is_crib=False):
     """
     Returns the total point value of a 4 card hand with the given cut card
     :param hand4cards: the 4 cards in the player's hand
     :param cutcard: cut card
+    :param is_crib: if the hand being scored is the crib
     :return: integer point value of the hand
     """
 
     total_points = 0
     total_points += right_jack(hand4cards,cutcard)
-    total_points += flush(hand4cards,cutcard,Crib)
+    total_points += flush(hand4cards, cutcard, is_crib)
 
     sorted5cards=sort_cards(hand4cards,cutcard)
 
@@ -58,7 +59,7 @@ def right_jack(hand4cards, cutcard):
     return points
 
 
-def flush(hand4cards, cutcard,Crib):
+def flush(hand4cards, cutcard, is_crib):
     """
     Returns the point value from flushes in the given hand
     :param hand4cards: the 4 cards in the player's hand
@@ -71,7 +72,7 @@ def flush(hand4cards, cutcard,Crib):
         points += 4
         if hand4cards[0][1] == cutcard[1]:
             points += 1
-    if Crib:
+    if is_crib:
         if points==4:
             points=0
 

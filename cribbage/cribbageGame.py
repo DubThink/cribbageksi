@@ -91,31 +91,36 @@ class CribbageGame:
         self.print_scores()
         # print("DEBUG",hand_a,hand_b)
         if a_is_dealer:
-            print("B's hand:")
-            print(", ".join([card_to_string(c) for c in hand_b]))
+            if self.verbose:
+                print("B's hand:")
+                print(", ".join([card_to_string(c) for c in hand_b]))
             self.score_hand(hand_b, cut_card, False)
         else:
-            print("A's hand:")
-            print(", ".join([card_to_string(c) for c in hand_a]))
+            if self.verbose:
+                print("A's hand:")
+                print(", ".join([card_to_string(c) for c in hand_a]))
             self.score_hand(hand_a, cut_card, True)
 
         if self.game_over():
             return True
 
-        print("The crib, which belongs to %s:" % ("A" if a_is_dealer else "B"))
-        print(", ".join([card_to_string(c) for c in crib]))
+        if self.verbose:
+            print("The crib, which belongs to %s:" % ("A" if a_is_dealer else "B"))
+            print(", ".join([card_to_string(c) for c in crib]))
         self.score_hand(crib, cut_card, a_is_dealer, True)
 
         if self.game_over():
             return True
 
         if not a_is_dealer:
-            print("B's hand:")
-            print(", ".join([card_to_string(c) for c in hand_b]))
+            if self.verbose:
+                print("B's hand:")
+                print(", ".join([card_to_string(c) for c in hand_b]))
             self.score_hand(hand_b, cut_card, False)
         else:
-            print("A's hand:")
-            print(", ".join([card_to_string(c) for c in hand_a]))
+            if self.verbose:
+                print("A's hand:")
+                print(", ".join([card_to_string(c) for c in hand_a]))
             self.score_hand(hand_a, cut_card, True)
 
         if self.game_over():
@@ -133,7 +138,7 @@ class CribbageGame:
         else:
             return False
         print("GAME OVER!")
-        print(winner + "passed a score of 120 to win.")
+        print(winner + " passed a score of 120 to win.")
         self.print_scores()
         return True
 
@@ -245,7 +250,7 @@ class CribbageGame:
         pass
 
     def score_hand(self, hand4cards, cutcard, is_a, is_crib=False):
-        self.score_points(score_hand(hand4cards,cutcard),"Their cards",is_a)
+        self.score_points(score_hand(hand4cards,cutcard,is_crib),"Their cards",is_a)
 
 
 class IllegalMoveException(Exception):
