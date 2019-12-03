@@ -124,33 +124,33 @@ class GreedyCribbageAgent(BaseCribbageAgent):
         # Check 4th card sequence
         # Any consecutive sequence of cards, play 4th sequence
         if len(sequence) > 3:
-            cards = [sequence[len(sequence) - 1][0], sequence[len(sequence) - 2][0], sequence[len(sequence) - 3][0]]
+            cards = [peg_val(sequence[len(sequence) - 1]), peg_val(sequence[len(sequence) - 2]), peg_val(sequence[len(sequence) - 3])]
             cards.sort()
             if cards[0] + 1 in cards and cards[1] + 1 in cards:
                 for i in hand:
-                    if i[0] == cards[len(cards) - 1] + 1:
+                    if peg_val(i) == (cards[len(cards) - 1]) + 1 and peg_val(i) + current_sum <= 31:
                         return i
 
         # Check 3rd card sequence
         if len(sequence) > 2:
-            cards = [sequence[len(sequence) - 1][0], sequence[len(sequence) - 2][0]]
+            cards = [peg_val(sequence[len(sequence) - 1]), peg_val(sequence[len(sequence) - 2])]
             cards.sort()
             if cards[0] + 1 in cards:
                 for i in hand:
-                    if i[0] == cards[len(cards) - 1] + 1:
+                    if peg_val(i) == cards[len(cards) - 1] + 1 and peg_val(i) + current_sum <= 31:
                         return i
 
         # Get sum to 15
         for i in hand:
             # print(i)
-            if i[0] + current_sum == 15:
+            if peg_val(i) + current_sum == 15:
                 return i
 
         # Play same rank
         if len(sequence) > 0:
             check = sequence[len(sequence) - 1]
             for i in hand:
-                if i == check:
+                if i == check and peg_val(i) + current_sum <= 31:
                     return i
 
 
@@ -158,13 +158,15 @@ class GreedyCribbageAgent(BaseCribbageAgent):
         # Try to stop other player from getting sequence
         cards = []
         for i in hand:
-            if i[0] + current_sum <= 31:
-                return i
-        #         cards.append(i)
-        # for i in cards:
-        #     if abs(sequence[len(sequence) - 1][0] - i[0]) > 1:
-        #         return i
-       # return cards[0]
+            if peg_val(i) + current_sum <= 31:
+                cards.append(i)
+        if len(cards) > 0:
+            return cards[0]
+        #for card in cards:
+
+
+
+
 
 
     #
