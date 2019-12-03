@@ -4,7 +4,7 @@ from cribbage.deck import peg_val
 
 
 
-def score_hand(hand4cards, cutcard):
+def score_hand(hand4cards, cutcard, Crib):
     """
     Returns the total point value of a 4 card hand with the given cut card
     :param hand4cards: the 4 cards in the player's hand
@@ -14,7 +14,7 @@ def score_hand(hand4cards, cutcard):
 
     total_points = 0
     total_points += right_jack(hand4cards,cutcard)
-    total_points += flush(hand4cards,cutcard)
+    total_points += flush(hand4cards,cutcard,Crib)
 
     sorted5cards=sort_cards(hand4cards,cutcard)
 
@@ -58,7 +58,7 @@ def right_jack(hand4cards, cutcard):
     return points
 
 
-def flush(hand4cards, cutcard):
+def flush(hand4cards, cutcard,Crib):
     """
     Returns the point value from flushes in the given hand
     :param hand4cards: the 4 cards in the player's hand
@@ -71,7 +71,13 @@ def flush(hand4cards, cutcard):
         points += 4
         if hand4cards[0][1] == cutcard[1]:
             points += 1
+    if Crib:
+        if points==4:
+            points=0
+
     return points
+
+
 
 def two_card_fifteens(sorted5cards):
     """
@@ -210,7 +216,7 @@ def expected_hand_value(hand4cards,discard2cards):
     expected_value=0
 
     for i in range (14):
-        hand_value=score_hand(hand4cards,(i,1))      #gets the score of the hand for each possible cut card (not accounting for suits)
+        hand_value=score_hand(hand4cards,(i,1),False)      #gets the score of the hand for each possible cut card (not accounting for suits)
         probability=card_counts[i]/46                #calculates the probability of drawing that cut card
         expected_value += (hand_value*probability)   #multiplies the calculated score by the probability of drawing that cut card, adds to total expected value
 
