@@ -315,7 +315,16 @@ def get_int_in_range(prompt,a,b):
         print("Number not in range")
 
 
+class AdvancedAgent(BaseCribbageAgent):
 
+    def discard_crib(self, hand, is_dealer):
+        """
+
+        :param hand:
+        :param is_dealer:
+        :return:
+        """
+        pass
 
 class HumanAgent(BaseCribbageAgent):
     def discard_crib(self, hand, is_dealer):
