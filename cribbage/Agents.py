@@ -95,18 +95,17 @@ class GreedyCribbageAgent(BaseCribbageAgent):
         priorityq = []
         possible_cut_cards = [(1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1), (11, 1), (12, 1), (13, 1)]
         for i in range(len(hand)):
-            copyhand = deepcopy(hand)
 
-            first_removed = copyhand[i]
-            copyhand.remove(first_removed)
-            for j in range(i, len(copyhand)):
-                copyhand2 = deepcopy(copyhand)
-                second_removed = copyhand[j]
-                copyhand2.remove(second_removed)
+            first_removed = hand[i]
+            for j in range(i+1, len(hand)):
+                copyhand = deepcopy(hand)
+                second_removed = hand[j]
+                copyhand.remove(first_removed)
+                copyhand.remove(second_removed)
 
                 for cut_card in possible_cut_cards:
-                    points = scorer.score_hand(copyhand2, cut_card)
                     if not i == j:
+                        points = scorer.score_hand(copyhand, cut_card)
                         heapq.heappush(priorityq, (-points, i, j))
 
         return priorityq

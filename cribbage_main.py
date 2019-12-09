@@ -21,4 +21,4 @@ def run_trials(agent_a, agent_b, num_trials, verbose=False):
 
 
 if __name__ == "__main__":
-    run_trials(RandomCribbageAgent(), GreedyCribbageAgent(), 1000)
+    run_trials(RandomCribbageAgent(), GreedyCribbageAgent(), 100)
