@@ -208,22 +208,34 @@ class AdvancedAgent(BaseCribbageAgent):
         """
         pass
 
-    def bfs(self, hand):
+    def get_possible_4_hands(self, hand):
         possible_4 = []
-        getrid = []
         copyhand = deepcopy(hand)
 
         for i in range(len(copyhand)):
             first_card = copyhand[i]
             copyhand2 = deepcopy(copyhand)
-            for j in range(i, len(copyhand2)):
+            for j in range(i+1, len(copyhand2)):
                 second_card = copyhand2[j]
-                copyhand2.remove(second_card)
-                getrid.append((first_card, second_card))
-                possible_4.append(copyhand2)
-            copyhand.remove(first_card)
+                copyhand3 = deepcopy(copyhand2)
+                copyhand3.remove(second_card)
+                copyhand3.remove(first_card)
+                possible_4.append(copyhand3)
 
         return possible_4
+
+    def get_possible_discards(self, hand):
+        possible_discards = []
+        copyhand = deepcopy(hand)
+
+        for i in range(len(copyhand)):
+            first_card = copyhand[i]
+            copyhand2 = deepcopy(copyhand)
+            for j in range(i+1, len(copyhand2)):
+                second_card = copyhand2[j]
+                possible_discards.append((first_card, second_card))
+
+        return possible_discards
 
 
 class HumanAgent(BaseCribbageAgent):
