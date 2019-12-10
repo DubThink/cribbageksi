@@ -170,8 +170,8 @@ class CribbageGame:
             player = self.agent_a if is_a else self.agent_b
             hand = hand_a if is_a else hand_b
             # the current player can play
+            pick = player.pegging_move(deepcopy(hand), deepcopy(seq), total)
             if can_peg(hand, total):
-                pick = player.pegging_move(deepcopy(hand), deepcopy(seq), total)
                 # a card should be played
                 if pick is None:
                     raise IllegalMoveException("Must play a card if able to. data:"+str((deepcopy(hand), deepcopy(seq), total))+"   player "+("A" if is_a else "B"))
@@ -189,7 +189,15 @@ class CribbageGame:
                 self.score_pegging(seq, total, is_a)
                 if self.game_over():
                     return True
+            else:
+                if pick is not None:
+                    raise IllegalMoveException("Played a card that brought the total over 31.")
             if not can_peg(hand_a,total) and not can_peg(hand_b,total):
+                # make sure neither player tries to play a card
+                pick_a = player.pegging_move(deepcopy(hand_a), deepcopy(seq), total)
+                pick_b = player.pegging_move(deepcopy(hand_b), deepcopy(seq), total)
+                if pick_a is not None or pick_b is not None:
+                    raise IllegalMoveException("Played a card that brought the total over 31.")
                 # neither person can go
                 self.score_points(1,"Last card", is_a)
                 if self.game_over():

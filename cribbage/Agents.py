@@ -29,14 +29,7 @@ class BaseCribbageAgent:
         :param current_sum: the current sum on the table
         :return: a single Card
         """
-        # Randomly choose a card that doesn't put sum over 31
-        choices = []
-
-        for card in hand:
-            if peg_val(card) + current_sum <= 31:
-                choices.append(card)
-        choice = random.randint(0, len(choices) - 1)
-        return choices[choice]
+        raise NotImplementedError()
 
 
 class RandomCribbageAgent(BaseCribbageAgent):
@@ -68,6 +61,30 @@ class RandomCribbageAgent(BaseCribbageAgent):
             if discard_index == discard_index2:
                 discard_index2 += 1
             return hand[discard_index], hand[discard_index2]
+
+    def pegging_move(self, hand, sequence, current_sum):
+        """
+        Chooses a card to play during pegging
+        :param hand: the player's hand
+        :param sequence: the current sequence
+        :param current_sum: the current sum on the table
+        :return: a single Card
+        """
+        # Randomly choose a card that doesn't put sum over 31
+        choices = []
+
+        if not hand:
+            return None
+
+        for card in hand:
+            if peg_val(card) + current_sum <= 31:
+                choices.append(card)
+
+        if not choices:
+            return None
+
+        choice = random.randint(0, len(choices) - 1)
+        return choices[choice]
 
 
 class GreedyCribbageAgent(BaseCribbageAgent):
