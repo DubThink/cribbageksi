@@ -1,4 +1,4 @@
-from cribbage.Agents import RandomCribbageAgent, HumanAgent, GreedyCribbageAgent
+from cribbage.Agents import RandomCribbageAgent, HumanAgent, GreedyCribbageAgent, AdvancedAgent
 from cribbage.cribbageGame import CribbageGame
 
 
@@ -21,4 +21,4 @@ def run_trials(agent_a, agent_b, num_trials, verbose=False):
 
 
 if __name__ == "__main__":
-    run_trials(RandomCribbageAgent(), GreedyCribbageAgent(), 100)
+    run_trials(GreedyCribbageAgent(), AdvancedAgent(), 100)

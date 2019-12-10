@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-from cribbage.Agents import RandomCribbageAgent, HumanAgent, GreedyCribbageAgent
+from cribbage.Agents import RandomCribbageAgent, HumanAgent, GreedyCribbageAgent,AdvancedAgent
 from cribbage.cribbageGame import CribbageGame
 from cribbage.deck import *
 
@@ -42,3 +42,6 @@ def run_discard_scenarios(hand, *agents):
 if __name__ == "__main__":
 
     run_discard_scenarios([(10,HEARTS),(7,HEARTS),(13,SPADES),(10,CLUBS),(10,SPADES),(10,DIAMONDS)],GreedyCribbageAgent())
+
+
+

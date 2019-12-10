@@ -1,6 +1,7 @@
 import random
 import heapq
 from cribbage.deck import card_to_string, peg_val
+from cribbage.scoreHand import expected_hand_value
 from cribbage.deck import card_to_string
 from copy import deepcopy
 import cribbage.scoreHand as scorer
@@ -182,14 +183,40 @@ def get_int_in_range(prompt,a,b):
 
 class AdvancedAgent(BaseCribbageAgent):
 
+    def __init__(self):
+        self.score = 0
+
     def discard_crib(self, hand, is_dealer):
         """
 
-        :param hand:
-        :param is_dealer:
+        :param hand:6 card hand dealt to player
+        :param is_dealer: if the player is the dealer
+        :param risk: -1 for risk averse, 0 for risk neutral, 1 for risk loving
         :return:
         """
-        pass
+
+        four_card_hands=self.get_possible_4_hands(hand)
+        discarded=self.get_possible_discards(hand)
+        hand_value_list=[]
+
+        #creates a list of expected values for each 4 card hand
+        for i in range(15):
+            value=expected_hand_value(four_card_hands[i],discarded[i],-1)
+            hand_value_list.append(value)
+
+        #gets list of cards to discard corresponding to max value
+        max_hand_value=0
+        discard_index=0
+        for i in range(15):
+            if hand_value_list[i]>max_hand_value:
+                max_hand_value=hand_value_list[i]
+                discard_index=i
+        cards_to_discard=discarded[discard_index]
+
+        return cards_to_discard[0], cards_to_discard[1]
+
+
+
 
     def get_possible_4_hands(self, hand):
         possible_4 = []
