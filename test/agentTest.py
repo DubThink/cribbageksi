@@ -55,3 +55,5 @@ class GreedyAgentTest(unittest.TestCase):
         assert passing
 
 
+if __name__ == '__main__':
+    unittest.main()
