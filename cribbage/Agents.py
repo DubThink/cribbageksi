@@ -217,7 +217,7 @@ class AdvancedAgent(BaseCribbageAgent):
         hand_value_list=[]
         #creates a list of expected values for each 4 card hand
         for i in range(15):
-            value=expected_hand_value(four_card_hands[i],discarded[i],1)
+            value=expected_hand_value(four_card_hands[i],discarded[i],-1)
             hand_value_list.append(value)
 
         #gets list of cards to discard corresponding to max value
@@ -263,6 +263,58 @@ class AdvancedAgent(BaseCribbageAgent):
 
         return possible_discards
 
+    def pegging_move(self, hand, sequence, current_sum):
+        """
+        Chooses a card to play during pegging
+        :param hand: the player's hand
+        :param sequence: the current sequence
+        :param current_sum: the current sum on the table
+        :return: a single Card
+        """
+        # print("seq:", sequence)
+        # print("hand: ", hand)
+        # Check 4th card sequence
+        # Any consecutive sequence of cards, play 4th sequence
+        if len(sequence) > 3:
+            cards = [peg_val(sequence[len(sequence) - 1]), peg_val(sequence[len(sequence) - 2]), peg_val(sequence[len(sequence) - 3])]
+            cards.sort()
+            if cards[0] + 1 in cards and cards[1] + 1 in cards:
+                for i in hand:
+                    if peg_val(i) == (cards[len(cards) - 1]) + 1 and peg_val(i) + current_sum <= 31:
+                        return i
+
+        # Check 3rd card sequence
+        if len(sequence) > 2:
+            cards = [peg_val(sequence[len(sequence) - 1]), peg_val(sequence[len(sequence) - 2])]
+            cards.sort()
+            if cards[0] + 1 in cards:
+                for i in hand:
+                    if peg_val(i) == cards[len(cards) - 1] + 1 and peg_val(i) + current_sum <= 31:
+                        return i
+
+        # Get sum to 15
+        for i in hand:
+            # print(i)
+            if peg_val(i) + current_sum == 15:
+                return i
+
+        # Play same rank
+        if len(sequence) > 0:
+            check = sequence[len(sequence) - 1]
+            for i in hand:
+                if i == check and peg_val(i) + current_sum <= 31:
+                    return i
+
+
+        # Find a card to play that doesn't put sum over 31
+        # Try to stop other player from getting sequence
+        cards = []
+        for i in hand:
+            if peg_val(i) + current_sum <= 31:
+                cards.append(i)
+        if len(cards) > 0:
+            return cards[0]
+        #for card in cards:
 
 class HumanAgent(BaseCribbageAgent):
     def discard_crib(self, hand, is_dealer):
