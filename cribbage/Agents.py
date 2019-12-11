@@ -200,15 +200,15 @@ def get_int_in_range(prompt,a,b):
 
 class AdvancedAgent(BaseCribbageAgent):
 
-    def __init__(self):
+    def __init__(self,risk):
         self.score = 0
+        self.risk=risk
 
     def discard_crib(self, hand, is_dealer):
         """
 
         :param hand:6 card hand dealt to player
         :param is_dealer: if the player is the dealer
-        :param risk: -1 for risk averse, 0 for risk neutral, 1 for risk loving
         :return:
         """
 
@@ -217,7 +217,7 @@ class AdvancedAgent(BaseCribbageAgent):
         hand_value_list=[]
         #creates a list of expected values for each 4 card hand
         for i in range(15):
-            value=expected_hand_value(four_card_hands[i],discarded[i],-1)
+            value=expected_hand_value(four_card_hands[i],discarded[i],self.risk)
             hand_value_list.append(value)
 
         #gets list of cards to discard corresponding to max value
