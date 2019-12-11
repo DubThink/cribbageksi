@@ -43,5 +43,12 @@ if __name__ == "__main__":
 
     run_discard_scenarios([(10,HEARTS),(7,HEARTS),(13,SPADES),(10,CLUBS),(10,SPADES),(10,DIAMONDS)],GreedyCribbageAgent())
 
+    #risky agent behaves differently than greedy agent
+    run_discard_scenarios([(5,HEARTS),(5,DIAMONDS),(5,SPADES),(10,CLUBS),(9,SPADES),(10,DIAMONDS)],GreedyCribbageAgent())
+    run_discard_scenarios([(5,HEARTS),(5,DIAMONDS),(5,SPADES),(10,CLUBS),(9,SPADES),(10,DIAMONDS)],AdvancedAgent())
+
+    run_discard_scenarios([(6,HEARTS),(7,DIAMONDS),(7,SPADES),(2,CLUBS),(2,SPADES),(4,DIAMONDS)],GreedyCribbageAgent())
+    run_discard_scenarios([(6,HEARTS),(7,DIAMONDS),(7,SPADES),(2,CLUBS),(2,SPADES),(4,DIAMONDS)],GreedyCribbageAgent())
+
 
 

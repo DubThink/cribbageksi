@@ -96,3 +96,6 @@ class AdvancedAgentTest(unittest.TestCase):
         print(first_card)
         print(second_card)
         assert True
+
+if __name__ == '__main__':
+    unittest.main()
