@@ -1,5 +1,7 @@
 import random
 import heapq
+
+from cribbage.cribbageGame import can_peg
 from cribbage.deck import card_to_string, peg_val
 from cribbage.scoreHand import expected_hand_value
 from cribbage.deck import card_to_string
@@ -192,7 +194,7 @@ def get_int_in_range(prompt,a,b):
             ret = None
             print("Invalid number")
             continue
-        if a < ret < b:
+        if a <= ret <= b:
             return ret
         ret = None
         print("Number not in range")
@@ -332,7 +334,10 @@ class HumanAgent(BaseCribbageAgent):
         return [hand[n1-1], hand[n2-1]]
 
     def pegging_move(self, hand, sequence, current_sum):
+        if not can_peg(hand,current_sum):
+            return None
+        if len(hand)==0:
+            return None
         print("hand: ",", ".join([card_to_string(c) for c in hand]))
         n1 = get_int_in_range("play card ", 1, len(hand))
-
         return hand[n1-1]
