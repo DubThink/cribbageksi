@@ -215,10 +215,9 @@ class AdvancedAgent(BaseCribbageAgent):
         four_card_hands=self.get_possible_4_hands(hand)
         discarded=self.get_possible_discards(hand)
         hand_value_list=[]
-
         #creates a list of expected values for each 4 card hand
         for i in range(15):
-            value=expected_hand_value(four_card_hands[i],discarded[i],-1)
+            value=expected_hand_value(four_card_hands[i],discarded[i],1)
             hand_value_list.append(value)
 
         #gets list of cards to discard corresponding to max value
