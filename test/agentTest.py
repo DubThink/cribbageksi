@@ -5,6 +5,7 @@ hand1 = [(3, 2), (9, 1), (10, 4), (6, 1), (9, 2), (5, 1)]
 
 randomTestAgent = Agents.RandomCribbageAgent()
 greedyTestAgent = Agents.GreedyCribbageAgent()
+advancedTestAgent = Agents.AdvancedAgent()
 
 
 class RandomAgentTest(unittest.TestCase):
@@ -54,4 +55,33 @@ class GreedyAgentTest(unittest.TestCase):
             passing = True
         assert passing
 
+class AdvancedAgentTest(unittest.TestCase):
 
+    """
+    Thy
+    """
+    def test_get_possible_4_hands(self):
+        possible_4 = advancedTestAgent.get_possible_4_hands(hand1)
+        passing = True
+        if len(possible_4) == 0:
+            passing = False
+        random_card = (8, 1)
+        if random_card in possible_4:
+            passing = False
+        assert passing
+
+    def test_get_possible_discards(self):
+        possible_discards = advancedTestAgent.get_possible_discards(hand1)
+        passing = True
+        if len(possible_discards) == 0:
+            passing = False
+
+        hand2 = []
+        possible_discards2 = advancedTestAgent.get_possible_discards(hand2)
+        if not len(possible_discards2) == 0:
+            passing = False
+        assert passing
+
+
+if __name__ == '__main__':
+    unittest.main()

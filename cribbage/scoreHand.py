@@ -210,7 +210,9 @@ def expected_hand_value(hand4cards,discard2cards,risk):
     card_counts=[]
     for i in range(14):
         card_counts.append(4)
-    six_cards=hand4cards.append(discard2cards[0],discard2cards[1])  #puts the six cards into one list
+    six_cards=[]
+    six_cards.append(discard2cards[0])
+    six_cards.append(discard2cards[1])
 
     for card in six_cards:
         value=card[0]
@@ -222,6 +224,8 @@ def expected_hand_value(hand4cards,discard2cards,risk):
         hand_value=score_hand(hand4cards,(i,1),False)      #gets the score of the hand for each possible cut card (not accounting for suits)
         if risk==-1:
             hand_value=math.sqrt(hand_value)
+            hand_value = math.sqrt(hand_value)
+
         if risk==1:
             hand_value=hand_value^2
         probability=card_counts[i]/46                #calculates the probability of drawing that cut card
