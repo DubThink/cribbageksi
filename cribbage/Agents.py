@@ -1,5 +1,7 @@
 import random
 import heapq
+
+from cribbage.cribbageGame import can_peg
 from cribbage.deck import card_to_string, peg_val
 from cribbage.scoreHand import expected_hand_value
 from cribbage.expectimaxTree import expectimaxTree
@@ -193,7 +195,7 @@ def get_int_in_range(prompt,a,b):
             ret = None
             print("Invalid number")
             continue
-        if a < ret < b:
+        if a <= ret <= b:
             return ret
         ret = None
         print("Number not in range")
@@ -201,39 +203,42 @@ def get_int_in_range(prompt,a,b):
 
 class AdvancedAgent(BaseCribbageAgent):
 
-    def __init__(self):
+    def __init__(self,risk):
         self.score = 0
+        self.risk=risk
 
     def discard_crib(self, hand, is_dealer):
         """
 
         :param hand:6 card hand dealt to player
         :param is_dealer: if the player is the dealer
-        :param risk: -1 for risk averse, 0 for risk neutral, 1 for risk loving
         :return:
         """
 
+        four_card_hands = self.get_possible_4_hands(hand)
+        discarded = self.get_possible_discards(hand)
+        hand_value_list = []
+
+        # creates a list of expected values for each 4 card hand
         four_card_hands=self.get_possible_4_hands(hand)
         discarded=self.get_possible_discards(hand)
         hand_value_list=[]
         #creates a list of expected values for each 4 card hand
         for i in range(15):
-            value=expected_hand_value(four_card_hands[i],discarded[i],-1)
+            value=expected_hand_value(four_card_hands[i],discarded[i],self.risk)
+
             hand_value_list.append(value)
 
-        #gets list of cards to discard corresponding to max value
-        max_hand_value=0
-        discard_index=0
+        # gets list of cards to discard corresponding to max value
+        max_hand_value = 0
+        discard_index = 0
         for i in range(15):
-            if hand_value_list[i]>max_hand_value:
-                max_hand_value=hand_value_list[i]
-                discard_index=i
-        cards_to_discard=discarded[discard_index]
+            if hand_value_list[i] > max_hand_value:
+                max_hand_value = hand_value_list[i]
+                discard_index = i
+        cards_to_discard = discarded[discard_index]
 
         return cards_to_discard[0], cards_to_discard[1]
-
-
-
 
     def get_possible_4_hands(self, hand):
         possible_4 = []
@@ -288,7 +293,10 @@ class HumanAgent(BaseCribbageAgent):
         return [hand[n1-1], hand[n2-1]]
 
     def pegging_move(self, hand, sequence, current_sum):
+        if not can_peg(hand,current_sum):
+            return None
+        if len(hand)==0:
+            return None
         print("hand: ",", ".join([card_to_string(c) for c in hand]))
         n1 = get_int_in_range("play card ", 1, len(hand))
-
         return hand[n1-1]

@@ -225,8 +225,8 @@ class CribbageGame:
                     raise IllegalMoveException("Played a card that brought the total over 31.")
             if not can_peg(hand_a, total) and not can_peg(hand_b, total):
                 # make sure neither player tries to play a card
-                pick_a = player.pegging_move(deepcopy(hand_a), deepcopy(seq), total)
-                pick_b = player.pegging_move(deepcopy(hand_b), deepcopy(seq), total)
+                pick_a = self.agent_a.pegging_move(deepcopy(hand_a), deepcopy(seq), total)
+                pick_b = self.agent_b.pegging_move(deepcopy(hand_b), deepcopy(seq), total)
                 if pick_a is not None or pick_b is not None:
                     raise IllegalMoveException("Played a card that brought the total over 31.")
                 # neither person can go
