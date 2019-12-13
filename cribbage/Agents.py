@@ -2,6 +2,7 @@ import random
 import heapq
 from cribbage.deck import card_to_string, peg_val
 from cribbage.scoreHand import expected_hand_value
+from cribbage.expectimaxTree import expectimaxTree
 from cribbage.deck import card_to_string
 from copy import deepcopy
 import cribbage.scoreHand as scorer
@@ -271,50 +272,8 @@ class AdvancedAgent(BaseCribbageAgent):
         :param current_sum: the current sum on the table
         :return: a single Card
         """
-        # print("seq:", sequence)
-        # print("hand: ", hand)
-        # Check 4th card sequence
-        # Any consecutive sequence of cards, play 4th sequence
-        if len(sequence) > 3:
-            cards = [peg_val(sequence[len(sequence) - 1]), peg_val(sequence[len(sequence) - 2]), peg_val(sequence[len(sequence) - 3])]
-            cards.sort()
-            if cards[0] + 1 in cards and cards[1] + 1 in cards:
-                for i in hand:
-                    if peg_val(i) == (cards[len(cards) - 1]) + 1 and peg_val(i) + current_sum <= 31:
-                        return i
-
-        # Check 3rd card sequence
-        if len(sequence) > 2:
-            cards = [peg_val(sequence[len(sequence) - 1]), peg_val(sequence[len(sequence) - 2])]
-            cards.sort()
-            if cards[0] + 1 in cards:
-                for i in hand:
-                    if peg_val(i) == cards[len(cards) - 1] + 1 and peg_val(i) + current_sum <= 31:
-                        return i
-
-        # Get sum to 15
-        for i in hand:
-            # print(i)
-            if peg_val(i) + current_sum == 15:
-                return i
-
-        # Play same rank
-        if len(sequence) > 0:
-            check = sequence[len(sequence) - 1]
-            for i in hand:
-                if i == check and peg_val(i) + current_sum <= 31:
-                    return i
-
-
-        # Find a card to play that doesn't put sum over 31
-        # Try to stop other player from getting sequence
-        cards = []
-        for i in hand:
-            if peg_val(i) + current_sum <= 31:
-                cards.append(i)
-        if len(cards) > 0:
-            return cards[0]
-        #for card in cards:
+        tree = expectimaxTree(hand, sequence, current_sum, 3)
+        return tree.recommendCard(0)
 
 class HumanAgent(BaseCribbageAgent):
     def discard_crib(self, hand, is_dealer):
