@@ -58,6 +58,38 @@ class chanceNode:
 
 
 class expectimaxTree:
+    def scoreCalc(self, hand, sequence, current_sum):
+        # Calculate the score for playing any specific card
+        if len(sequence) > 3:
+            cards = [peg_val(sequence[len(sequence) - 1]), peg_val(sequence[len(sequence) - 2]), peg_val(sequence[len(sequence) - 3])]
+            cards.sort()
+            if cards[0] + 1 in cards and cards[1] + 1 in cards:
+                for i in hand:
+                    if peg_val(i) == (cards[len(cards) - 1]) + 1 and peg_val(i) + current_sum <= 31:
+                        return 4
+
+        # Check 3rd card sequence
+        if len(sequence) > 2:
+            cards = [peg_val(sequence[len(sequence) - 1]), peg_val(sequence[len(sequence) - 2])]
+            cards.sort()
+            if cards[0] + 1 in cards:
+                for i in hand:
+                    if peg_val(i) == cards[len(cards) - 1] + 1 and peg_val(i) + current_sum <= 31:
+                        return 3
+
+        # Get sum to 15
+        for i in hand:
+            # print(i)
+            if peg_val(i) + current_sum == 15:
+                return 2
+
+        # Play same rank
+        if len(sequence) > 0:
+            check = sequence[len(sequence) - 1]
+            for i in hand:
+                if i == check and peg_val(i) + current_sum <= 31:
+                    return 2
+        return 0
 
 
     # Initializes an expectimax tree of a specified depth
@@ -94,16 +126,16 @@ class expectimaxTree:
         for i in sequence:
             whole_deck.remove(i)
 
-        print(root.children)
-        if len(root.children) > 10:
-            print("Something fucked up")
+        # print(root.children)
+        # if len(root.children) > 10:
+        #     print("Something fucked up")
 
         # For each level 2 node, put in prob nodes with legal moves
         for cnode in root.children:
             # Get rid of illegal or used cards
             card_deck = deepcopy(whole_deck)
             if cnode.getCard() in card_deck:
-                card_deck.remove(node.card)
+                card_deck.remove(cnode.getCard())
             for card in card_deck:
                 if cnode.getSumFromPlay() + card[0] > 31 and card in card_deck:
                     card_deck.remove(card)
@@ -112,6 +144,17 @@ class expectimaxTree:
             for card in card_deck:
                 newChanceNode = chanceNode(card, 1/len(card_deck))
                 cnode.addChild(newChanceNode)
+
+        # Go through all prob nodes and add regular nodes for opponent
+        for n in root.getChildren():
+            for m in n.getChildren():
+                card_deck = deepcopy(whole_deck)
+                card_deck.remove(m.getCard())
+                for o in card_deck:
+                    newNode = node(o, 0)
+                    m.addChild(newNode)
+
+
 
     # Searches the expectimax tree and recommends the card to be played
     # 0 for  no risk, 1 for medium risk, 2 for high risk
