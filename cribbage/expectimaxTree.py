@@ -127,10 +127,6 @@ class expectimaxTree:
         for i in sequence:
             whole_deck.remove(i)
 
-        # print(root.children)
-        # if len(root.children) > 10:
-        #     print("Something fucked up")
-
         # For each level 2 node, put in prob nodes with legal moves
         for cnode in self.root.children:
             # Get rid of illegal or used cards

@@ -55,7 +55,7 @@ class GreedyAgentTest(unittest.TestCase):
             passing = True
         assert passing
 
-    def test_pegging(self):
+    def test_pegging_illegal(self):
         # Tests some stuff on the greedy pegging agent
 
         # Test that it won't play illegal card
@@ -68,6 +68,10 @@ class GreedyAgentTest(unittest.TestCase):
         else:
             passing = False
         assert passing
+
+    def test_pegging_sequences(self):
+        pass
+
 
 class AdvancedAgentTest(unittest.TestCase):
 
