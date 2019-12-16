@@ -58,6 +58,8 @@ https://en.wikipedia.org/wiki/Expected_utility_hypothesis
 
 http://faculty.econ.ucdavis.edu/faculty/bonanno/PDF/GT_book.pdf    (chapter 5 pg. 169)
 
+https://en.wikipedia.org/wiki/Expectiminimax
+
 https://www.youtube.com/watch?v=-_Dy5VEsUhE
 
 https://engineering.purdue.edu/~ipollak/ece302/FALL09/notes/Bernoulli_1738.pdf
