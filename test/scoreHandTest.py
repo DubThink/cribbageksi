@@ -1,5 +1,6 @@
-from cribbage.scoreHand import score_hand,pairs,two_card_fifteens,three_card_fifteens,four_card_fifteens,five_card_fifteens,runs,right_jack,flush,sort_cards
+from cribbage.scoreHand import score_hand,pairs,two_card_fifteens,three_card_fifteens,four_card_fifteens,five_card_fifteens,runs,right_jack,flush,sort_cards, expected_hand_value,card_counts_list,crib_cards_value
 import unittest
+import math
 
 class TestScoreHand(unittest.TestCase):
 
@@ -223,6 +224,57 @@ class TestScoreHand(unittest.TestCase):
         self.assertEqual(6,score_hand(hand,cutcard,False))
 
 
+    def test_card_counts(self):
+        hand = [(4, 1), (5, 2), (7, 3), (11, 3)]
+        discard=[(8,2),(13,4)]
+        result=[4,4,4,3,3,4,3,3,4,4,3,4,3]
+        self.assertEqual(result,card_counts_list(hand,discard))
+
+    def test_expected_value_risk_neutral(self):
+        hand = [(4, 1), (5, 2), (7, 3), (11, 3)]
+        discard=[(8,2),(13,4)]
+        #for i in range(1, 14):
+            #print("cut_card=", i)
+            #print(score_hand([(4, 1), (5, 2), (7, 3), (11, 3)], (i, 1), False))
+        #self.assertEqual(214/46,expected_hand_value(hand,discard,0))
+        self.assertAlmostEqual(214/46,expected_hand_value(hand,discard,0))
+
+
+    def test_expected_value_risk_averse(self):
+        hand = [(4, 1), (5, 2), (7, 3), (11, 3)]
+        discard=[(8,2),(13,4)]
+        self.assertAlmostEqual((42+16*math.sqrt(2)+9*math.sqrt(6)+4*math.sqrt(7))/46,expected_hand_value(hand,discard,-1))
+
+    def test_expected_value_risk_loving(self):
+        hand = [(4, 1), (5, 2), (7, 3), (11, 3)]
+        discard=[(8,2),(13,4)]
+        self.assertAlmostEqual(1144/46,expected_hand_value(hand,discard,1))
+
+    def test_is_it_working(self):
+        hand = [(4, 1), (5, 2), (7, 3), (11, 3)]
+        cutcard = (5, 1)
+        self.assertEqual(6, score_hand(hand, cutcard, False))
+
+    def test_crib_discard_value(self):
+        discard=[(5,2),(10,3)]
+        self.assertEqual(3,crib_cards_value(discard,True))
+
+    def test_crib_discard_value1(self):
+        discard=[(5,2),(5,3)]
+        self.assertEqual(-4,crib_cards_value(discard,False))
+
+    def test_crib_discard_value2(self):
+        discard=[(7,2),(6,3)]
+        self.assertEqual(-1,crib_cards_value(discard,False))
+
+    def test_crib_discard_value3(self):
+        discard = [(6,2), (7, 3)]
+        self.assertEqual(1, crib_cards_value(discard, True))
+
+    def test_crib_discard_value4(self):
+        discard = [(6,2), (3, 3)]
+        self.assertEqual(0, crib_cards_value(discard, True))
 
 if __name__ == '__main__':
     unittest.main()
+

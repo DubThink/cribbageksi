@@ -2,6 +2,7 @@ import heapq
 import math
 from itertools import combinations
 from cribbage.deck import peg_val
+from copy import deepcopy
 
 
 
@@ -13,7 +14,7 @@ def score_hand(hand4cards, cutcard, is_crib=False):
     :param is_crib: if the hand being scored is the crib
     :return: integer point value of the hand
     """
-
+    #print("hand4cards=",hand4cards,"cutcard=",cutcard)
     total_points = 0
     total_points += right_jack(hand4cards,cutcard)
     total_points += flush(hand4cards, cutcard, is_crib)
@@ -38,9 +39,10 @@ def sort_cards(hand4cards,cutcard):
     :return: sorted five card hand
     """
     hand_queue = []
-    hand4cards.append(cutcard)
-    for i in range(5):
-        heapq.heappush(hand_queue, hand4cards[i])
+
+    for c in hand4cards:
+        heapq.heappush(hand_queue, c)
+    heapq.heappush(hand_queue,cutcard)
     sorted5cards = heapq.nsmallest(5, hand_queue)
     return sorted5cards
 
@@ -199,6 +201,27 @@ def pairs(sorted5cards):
     return points
 
 
+
+def card_counts_list(hand4cards,discard2cards):
+    """
+    :param hand4cards: a list of 4 cards the player is keeping
+    :param discard2cards: a list of the 2 cards the player is planning to discard
+    :return:list of how many of each value are still in the 46 cards in the deck
+    """
+    card_counts=[]
+    for i in range(13):
+        card_counts.append(4)
+    #print(card_counts)
+    six_cards=deepcopy(hand4cards)
+    six_cards.append(discard2cards[0])
+    six_cards.append(discard2cards[1])
+    for card in six_cards:
+        value=card[0]
+        #print(value)
+        card_counts[value-1] -= 1
+    return card_counts
+
+
 def expected_hand_value(hand4cards,discard2cards,risk):
     """
       Returns the expected point value of a hand (taking into account all possible cut cards)
@@ -207,30 +230,42 @@ def expected_hand_value(hand4cards,discard2cards,risk):
       :param risk: -1 for risk averse, 0 for risk neutral, 1 for risk loving
       :return: expected point value for the 4 card hand
       """
-    card_counts=[]
-    for i in range(14):
-        card_counts.append(4)
-    six_cards=[]
-    six_cards.append(discard2cards[0])
-    six_cards.append(discard2cards[1])
-
-    for card in six_cards:
-        value=card[0]
-        card_counts[value-1] -= 1      #creates a list of the number of cards of each type left in the deck
-
+    card_counts=card_counts_list(hand4cards,discard2cards)
     expected_value=0
 
-    for i in range (14):
-        hand_value=score_hand(hand4cards,(i,1),False)      #gets the score of the hand for each possible cut card (not accounting for suits)
+    for i in range (1,14):
+        #print(i)
+        hand_value=score_hand(hand4cards,(i,1),False)
+        #gets the score of the hand for each possible cut card (not accounting for suits)
         if risk==-1:
             hand_value=math.sqrt(hand_value)
-            hand_value = math.sqrt(hand_value)
-
+            #hand_value = math.sqrt(hand_value)
         if risk==1:
-            hand_value=hand_value^2
-        probability=card_counts[i]/46                #calculates the probability of drawing that cut card
+            hand_value=hand_value*hand_value
+        probability=card_counts[i-1]/46                #calculates the probability of drawing that cut card
         expected_value += (hand_value*probability)   #multiplies the calculated score by the probability of drawing that cut card, adds to total expected value
+        #print("i =",i,"hand value= ",hand_value, "prob=",probability,"expected value=", expected_value)
+
 
     return expected_value
 
+
+def crib_cards_value(discard2cards,yourCrib):
+    value=0
+    card1_value=discard2cards[0][0]
+    card2_value=discard2cards[1][0]
+    if card1_value==card2_value:
+        value+=2
+    if card1_value+card2_value==15:
+        value+=2
+    if card1_value==5:
+        value+=1
+    if card2_value==5:
+        value+=1
+    if card1_value-card2_value==1 or card2_value-card1_value==1:
+        value+=1
+    if yourCrib:
+        return value
+    else:
+        return -1*value
 
