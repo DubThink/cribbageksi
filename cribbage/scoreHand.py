@@ -233,7 +233,7 @@ def expected_hand_value(hand4cards,discard2cards,risk):
     card_counts=card_counts_list(hand4cards,discard2cards)
     expected_value=0
 
-    for i in range (1,14):
+    for i in range(1,14):
         #print(i)
         hand_value=score_hand(hand4cards,(i,1),False)
         #gets the score of the hand for each possible cut card (not accounting for suits)
