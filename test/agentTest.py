@@ -5,7 +5,7 @@ hand1 = [(3, 2), (9, 1), (10, 4), (6, 1), (9, 2), (5, 1)]
 
 randomTestAgent = Agents.RandomCribbageAgent()
 greedyTestAgent = Agents.GreedyCribbageAgent()
-advancedTestAgent = Agents.AdvancedAgent()
+advancedTestAgent = Agents.AdvancedAgent(1)
 
 
 class RandomAgentTest(unittest.TestCase):
@@ -53,6 +53,20 @@ class GreedyAgentTest(unittest.TestCase):
             passing = True
         if points <= 0:
             passing = True
+        assert passing
+
+    def test_pegging(self):
+        # Tests some stuff on the greedy pegging agent
+
+        # Test that it won't play illegal card
+        hand = [(3, 2), (5, 3), (6, 3), (10, 2), (9, 2), (9, 3)]
+        sequence = [(5, 2)]
+        illegal = greedyTestAgent.pegging_move(hand, sequence, 30)
+        print(illegal)
+        if illegal == None:
+           passing = True
+        else:
+            passing = False
         assert passing
 
 class AdvancedAgentTest(unittest.TestCase):

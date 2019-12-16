@@ -98,7 +98,7 @@ class CribbageGame:
         cut_card = deck.drawCard()
         if self.verbose:
             print("The cut card is the", card_to_string(cut_card))
-        if cut_card[0] is 11:  # if the a jack is turned
+        if cut_card[0] == 11:  # if the a jack is turned
             self.score_points(2, "His heels", a_is_dealer)
 
         # run pegging
