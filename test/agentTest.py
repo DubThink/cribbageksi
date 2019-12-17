@@ -70,8 +70,21 @@ class GreedyAgentTest(unittest.TestCase):
         assert passing
 
     def test_pegging_sequences(self):
-        pass
-
+        # Test that the agent plays correct sequences
+        passing = True
+        hand = [(3, 2), (5, 2), (6, 3), (10, 2), (9, 2), (9, 3)]
+        sequence = [(3, 2), (4, 2)]
+        move = greedyTestAgent.pegging_move(hand, sequence, 12)
+        if move != (5, 2):
+            passing = False
+            return passing
+        hand = [(3, 2), (5, 2), (6, 3), (10, 2), (9, 2), (9, 3)]
+        sequence = [(3, 2), (4, 2), (5, 2)]
+        move = greedyTestAgent.pegging_move(hand, sequence, 12)
+        if move != (6, 3):
+            passing = False
+            return passing
+        return passing
 
 class AdvancedAgentTest(unittest.TestCase):
 
