@@ -228,7 +228,6 @@ def expected_hand_value(hand4cards, discard2cards, risk):
       :param risk: -1 for risk averse, 0 for risk neutral, 1 for risk loving
       :return: expected point value for the 4 card hand
       """
-<<<<<<< HEAD
     card_counts = card_counts_list(hand4cards, discard2cards)
     expected_value = 0
 
@@ -245,24 +244,6 @@ def expected_hand_value(hand4cards, discard2cards, risk):
         expected_value += (
                     hand_value * probability)  # multiplies the calculated score by the probability of drawing that cut card, adds to total expected value
         # print("i =",i,"hand value= ",hand_value, "prob=",probability,"expected value=", expected_value)
-=======
-    card_counts=card_counts_list(hand4cards,discard2cards)
-    expected_value=0
-
-    for i in range(1,14):
-        #print(i)
-        hand_value=score_hand(hand4cards,(i,1),False)
-        #gets the score of the hand for each possible cut card (not accounting for suits)
-        if risk==-1:
-            hand_value=math.sqrt(hand_value)
-            #hand_value = math.sqrt(hand_value)
-        if risk==1:
-            hand_value=hand_value*hand_value
-        probability=card_counts[i-1]/46                #calculates the probability of drawing that cut card
-        expected_value += (hand_value*probability)   #multiplies the calculated score by the probability of drawing that cut card, adds to total expected value
-        #print("i =",i,"hand value= ",hand_value, "prob=",probability,"expected value=", expected_value)
-
->>>>>>> 5b7b8f1293a7d9a5d7365a9d66f0ef762cc2c840
 
     return expected_value
 
