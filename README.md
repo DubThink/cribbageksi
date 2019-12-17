@@ -1,5 +1,5 @@
 # Cribbage Ksi
-CribbageKsi is a python-based cribbage ai and environment.
+CribbageKsi is a Python-based cribbage artificial intelligent agent and game environment used for running games of cribbage. Cribbage is a turn-taking game involving 2 stages, the discard and the pegging stages. At the beginning of each game, each player is dealt 6 cards, of which the player will be required to discard 2 during the discard stage. Once players have made their discards, the pegging stage begins where players take turn putting down cards face-up in the center. The game ends when all players have put down all of their cards, and the hand of each player is scored. 
 
 # PEAS
 
@@ -57,6 +57,8 @@ Resources:
 https://en.wikipedia.org/wiki/Expected_utility_hypothesis
 
 http://faculty.econ.ucdavis.edu/faculty/bonanno/PDF/GT_book.pdf    (chapter 5 pg. 169)
+
+https://en.wikipedia.org/wiki/Expectiminimax
 
 https://www.youtube.com/watch?v=-_Dy5VEsUhE
 
