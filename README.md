@@ -42,6 +42,29 @@ Thy: implement A* heuristic for bfs for discard crib
 
 Liam: minimax for pegging moves
 
+### Week of 12/2
+
+Benjamin:
+
+Molly: Background research for expected utility theory, writing function to get expected hand values with different risk levels
+
+Thy:
+
+Liam:
+
+
+### Week of 12/9
+
+Benjamin:
+
+Molly: Testing/fixing expected hand value function
+
+Thy:
+
+Liam:
+
+
+
 # AI Techniques
 
 Brief description: For discarding, the agent looks at all possible combinations of 2-card permutations to remove, calculates the possible scores for each permutation and enqueues each permutation into a priority queue according to their score. Pegging uses minimax to look at a maximum of depth 4 to calculate the best possible card to put down. 
