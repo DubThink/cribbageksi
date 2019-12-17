@@ -21,4 +21,4 @@ def run_trials(agent_a, agent_b, num_trials, verbose=False):
 
 
 if __name__ == "__main__":
-    run_trials(GreedyCribbageAgent(), AdvancedAgent(1), 100,False)
+    run_trials(HumanAgent(), AdvancedAgent(-1), 1,False)

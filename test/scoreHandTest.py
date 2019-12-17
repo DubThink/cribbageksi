@@ -233,10 +233,6 @@ class TestScoreHand(unittest.TestCase):
     def test_expected_value_risk_neutral(self):
         hand = [(4, 1), (5, 2), (7, 3), (11, 3)]
         discard=[(8,2),(13,4)]
-        #for i in range(1, 14):
-            #print("cut_card=", i)
-            #print(score_hand([(4, 1), (5, 2), (7, 3), (11, 3)], (i, 1), False))
-        #self.assertEqual(214/46,expected_hand_value(hand,discard,0))
         self.assertAlmostEqual(214/46,expected_hand_value(hand,discard,0))
 
 

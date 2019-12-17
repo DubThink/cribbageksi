@@ -14,7 +14,6 @@ def score_hand(hand4cards, cutcard, is_crib=False):
     :param is_crib: if the hand being scored is the crib
     :return: integer point value of the hand
     """
-    #print("hand4cards=",hand4cards,"cutcard=",cutcard)
     total_points = 0
     total_points += right_jack(hand4cards,cutcard)
     total_points += flush(hand4cards, cutcard, is_crib)
@@ -211,13 +210,11 @@ def card_counts_list(hand4cards,discard2cards):
     card_counts=[]
     for i in range(13):
         card_counts.append(4)
-    #print(card_counts)
     six_cards=deepcopy(hand4cards)
     six_cards.append(discard2cards[0])
     six_cards.append(discard2cards[1])
     for card in six_cards:
         value=card[0]
-        #print(value)
         card_counts[value-1] -= 1
     return card_counts
 
@@ -234,17 +231,14 @@ def expected_hand_value(hand4cards,discard2cards,risk):
     expected_value=0
 
     for i in range (1,14):
-        #print(i)
         hand_value=score_hand(hand4cards,(i,1),False)
         #gets the score of the hand for each possible cut card (not accounting for suits)
         if risk==-1:
             hand_value=math.sqrt(hand_value)
-            #hand_value = math.sqrt(hand_value)
         if risk==1:
             hand_value=hand_value*hand_value
         probability=card_counts[i-1]/46                #calculates the probability of drawing that cut card
         expected_value += (hand_value*probability)   #multiplies the calculated score by the probability of drawing that cut card, adds to total expected value
-        #print("i =",i,"hand value= ",hand_value, "prob=",probability,"expected value=", expected_value)
 
 
     return expected_value
