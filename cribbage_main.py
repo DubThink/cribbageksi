@@ -21,4 +21,7 @@ def run_trials(agent_a, agent_b, num_trials, verbose=False):
 
 
 if __name__ == "__main__":
-    run_trials(AdvancedAgent(-1), GreedyCribbageAgent(), 1000, False)
+    # run_trials(AdvancedAgent(-1), Hu(), 1000, False)
+    ### human play
+    game = CribbageGame(AdvancedAgent(-1), HumanAgent())
+    game.play_game()

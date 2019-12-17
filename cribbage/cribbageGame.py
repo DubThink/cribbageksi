@@ -108,6 +108,8 @@ class CribbageGame:
 
         self.print_scores()
 
+        if self.verbose:
+            print("The cut card is the", card_to_string(cut_card))
         # score non-dealer's hand
         if a_is_dealer:
             if self.verbose:
