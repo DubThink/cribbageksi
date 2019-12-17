@@ -71,8 +71,11 @@ This technique is generally used to evaluate financial situations where there is
 # Contributions
 
 Ben: deck.py and cribbageGame.py for the game's environment
+
 Molly: scoreHand.py for a library of functions used for evaluating the points of a hand of cards
+
 Thy: discard_crib and utility functions in agents used for determining what 2 cards to discard
+
 Liam: pegging_move in agents used for determining moves during pegging
 
 Python packages used: heapq, random, math, unittest, copy
