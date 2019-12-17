@@ -109,11 +109,26 @@ class AdvancedAgentTest(unittest.TestCase):
             passing = False
         if not len(possible_discards) == 15:
             passing = False
-        # assert passing
+        self.assertTrue(passing)
         (first_card, second_card) = advancedTestAgent.discard_crib(hand1, True)
         print(first_card)
         print(second_card)
         assert True
+
+    def test_temp(self):
+        possible_4 = advancedTestAgent.get_possible_4_hands(hand1)
+        possible_discards = advancedTestAgent.get_possible_discards(hand1)
+        possible_4_1 = advancedTestAgent.get_possible_4_hands_old(hand1)
+        possible_discards_1 = advancedTestAgent.get_possible_discards_old(hand1)
+        print("4 wowowowowowwo")
+        print(possible_4)
+        print(possible_4_1)
+        print("discard wowowowow wowowowowowwo")
+        print(possible_discards)
+        print(possible_discards_1)
+        print("aodfosafoasof")
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()
