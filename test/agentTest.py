@@ -86,6 +86,17 @@ class GreedyAgentTest(unittest.TestCase):
             return passing
         return passing
 
+    def test_sum(self):
+        passing = True
+        hand = [(3, 2), (5, 2), (6, 3), (10, 2), (9, 2), (9, 3)]
+        sequence = [(3, 2), (4, 2)]
+        move = greedyTestAgent.pegging_move(hand, sequence, 10)
+        if move != (5, 2):
+            passing = False
+        return passing
+
+
+
 class AdvancedAgentTest(unittest.TestCase):
 
     """
