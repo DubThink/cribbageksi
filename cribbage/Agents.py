@@ -220,7 +220,7 @@ class AdvancedAgent(BaseCribbageAgent):
         four_card_hands=self.get_possible_4_hands(hand)
         discarded=self.get_possible_discards(hand)
         hand_value_list=[]
-        #creates a list of expected values for each 4 card hand
+        # creates a list of expected values for each 4 card hand
         for i in range(15):
             value=expected_hand_value(four_card_hands[i],discarded[i],self.risk)
             hand_value_list.append(value)
@@ -237,30 +237,27 @@ class AdvancedAgent(BaseCribbageAgent):
 
     def get_possible_4_hands(self, hand):
         possible_4 = []
-        copyhand = deepcopy(hand)
+        # copyhand = deepcopy(hand)
 
-        for i in range(len(copyhand)):
-            first_card = copyhand[i]
-            copyhand2 = deepcopy(copyhand)
-            for j in range(i+1, len(copyhand2)):
-                second_card = copyhand2[j]
-                copyhand3 = deepcopy(copyhand2)
-                copyhand3.remove(second_card)
-                copyhand3.remove(first_card)
-                possible_4.append(copyhand3)
+        for i in range(len(hand)):
+            first_card = hand[i]
+            for j in range(i+1, len(hand)):
+                second_card = hand[j]
+                copyhand = deepcopy(hand)
+                copyhand.remove(second_card)
+                copyhand.remove(first_card)
+                possible_4.append(copyhand)
 
         return possible_4
 
     def get_possible_discards(self, hand):
         possible_discards = []
-        copyhand = deepcopy(hand)
 
-        for i in range(len(copyhand)):
-            first_card = copyhand[i]
-            copyhand2 = deepcopy(copyhand)
-            for j in range(i+1, len(copyhand2)):
-                second_card = copyhand2[j]
-                possible_discards.append((first_card, second_card))
+        for i in range(len(hand)):
+            first_card = hand[i]
+            for j in range(i+1, len(hand)):
+                second_card = hand[j]
+                possible_discards.append((first_card,second_card))
 
         return possible_discards
 
@@ -274,6 +271,7 @@ class AdvancedAgent(BaseCribbageAgent):
         """
         tree = expectimaxTree(hand, sequence, current_sum, 3)
         return tree.recommendCard(0)
+
 
 class HumanAgent(BaseCribbageAgent):
     def discard_crib(self, hand, is_dealer):

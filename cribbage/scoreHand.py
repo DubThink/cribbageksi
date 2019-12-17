@@ -210,16 +210,16 @@ def card_counts_list(hand4cards,discard2cards):
     card_counts=[]
     for i in range(13):
         card_counts.append(4)
-    six_cards=deepcopy(hand4cards)
-    six_cards.append(discard2cards[0])
-    six_cards.append(discard2cards[1])
-    for card in six_cards:
+    for card in hand4cards:
+        value=card[0]
+        card_counts[value-1] -= 1
+    for card in discard2cards:
         value=card[0]
         card_counts[value-1] -= 1
     return card_counts
 
 
-def expected_hand_value(hand4cards,discard2cards,risk):
+def expected_hand_value(hand4cards, discard2cards, risk):
     """
       Returns the expected point value of a hand (taking into account all possible cut cards)
       :param hand4cards: a list of 4 cards the player is keeping
@@ -227,6 +227,7 @@ def expected_hand_value(hand4cards,discard2cards,risk):
       :param risk: -1 for risk averse, 0 for risk neutral, 1 for risk loving
       :return: expected point value for the 4 card hand
       """
+
     card_counts=card_counts_list(hand4cards,discard2cards)
     expected_value=0
 

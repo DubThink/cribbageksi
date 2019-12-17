@@ -1,5 +1,5 @@
 # Cribbage Ksi
-CribbageKsi is a python-based cribbage ai and environment.
+CribbageKsi is a Python-based cribbage artificial intelligent agent and game environment used for running games of cribbage. Cribbage is a turn-taking game involving 2 stages, the discard and the pegging stages. At the beginning of each game, each player is dealt 6 cards, of which the player will be required to discard 2 during the discard stage. Once players have made their discards, the pegging stage begins where players take turn putting down cards face-up in the center. The game ends when all players have put down all of their cards, and the hand of each player is scored. 
 
 # PEAS
 
@@ -58,6 +58,8 @@ https://en.wikipedia.org/wiki/Expected_utility_hypothesis
 
 http://faculty.econ.ucdavis.edu/faculty/bonanno/PDF/GT_book.pdf    (chapter 5 pg. 169)
 
+https://en.wikipedia.org/wiki/Expectiminimax
+
 https://www.youtube.com/watch?v=-_Dy5VEsUhE
 
 https://engineering.purdue.edu/~ipollak/ece302/FALL09/notes/Bernoulli_1738.pdf
@@ -65,5 +67,26 @@ https://engineering.purdue.edu/~ipollak/ece302/FALL09/notes/Bernoulli_1738.pdf
 https://www.youtube.com/watch?v=tCreeXzCNRc
 
 This technique is generally used to evaluate financial situations where there is some degree of uncertainty/risk. It can be used for any situation with a set of outcomes and associated probabilities, including our scenario where our agent is trying to decide which four cards to keep. A potential challenge of applying this technique is that the formulas used to adjust the expected value to account for risk aversion might be a little complicated.
+
+# Contributions
+
+Ben: deck.py and cribbageGame.py for the game's environment
+
+Molly: scoreHand.py for a library of functions used for evaluating the points of a hand of cards
+
+Thy: discard_crib and utility functions in agents used for determining what 2 cards to discard
+
+Liam: pegging_move in agents used for determining moves during pegging
+
+Python packages used: heapq, random, math, unittest, copy
+
+# Results
+
+We found that the GreedyAgent outperforms the RandomAgent significantly, winning games at a steady rate of 95% throughout all test trials. However, the Advanced agent performs only slightly better than the greedy agent, despite having a lot of improvements (the implementation of Expected Utility theory in both discarding and pegging decisions). 
+
+# Clone and Play instructions
+
+To clone the project, download the repository and open up cribbage_main.py in your choice of text editor. In main is where you would be able to choose to run games between computer agents (i.e.: RandomAgent vs. AdvancedAgent or RandomAgent vs. GreedyAgent) or between you (a Human agent) and a computer agent. Simply edit the function call run_trials with the first two arguments being your two game agents of choice, and then run cribbage_main.py. 
+
 
 

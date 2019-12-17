@@ -102,7 +102,7 @@ class CribbageGame:
             self.score_points(2, "His heels", a_is_dealer)
 
         # run pegging
-        if self.pegging(deepcopy(hand_a), deepcopy(hand_b), a_is_dealer):
+        if self.pegging(deepcopy(hand_a), deepcopy(hand_b), not a_is_dealer):
             # if the game was won during pegging, return true
             return True
 

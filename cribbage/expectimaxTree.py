@@ -45,7 +45,7 @@ class chanceNode:
         self.utility = 0
 
     def debug(self):
-        print("Debuggin Info for Chance Node:")
+        print("Debugging Info for Chance Node:")
         print("Children: ", self.children)
         print("Utility: ", self.utility)
         print("Card:", self.card)
@@ -64,6 +64,15 @@ class chanceNode:
 
 
 class expectimaxTree:
+    # Tells if a move is illegal
+    def isIllegal(self, hand, sequence, current_sum, card):
+        pass
+
+    # Returns updated parameters for playing a card
+    def makeMoveUpdate(self, hand, sequence, current_sum, card):
+        pass
+
+    # Get a score for a move
     def scoreCalc(self, hand, sequence, current_sum, card):
         # Calculate the score for playing any specific card
         if len(sequence) > 3:
@@ -126,10 +135,6 @@ class expectimaxTree:
             whole_deck.remove(i)
         for i in sequence:
             whole_deck.remove(i)
-
-        # print(root.children)
-        # if len(root.children) > 10:
-        #     print("Something fucked up")
 
         # For each level 2 node, put in prob nodes with legal moves
         for cnode in self.root.children:
