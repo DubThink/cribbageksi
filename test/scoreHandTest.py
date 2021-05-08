@@ -1,4 +1,4 @@
-from cribbage.scoreHand import score_hand,pairs,two_card_fifteens,three_card_fifteens,four_card_fifteens,five_card_fifteens,runs,right_jack,flush,sort_cards, expected_hand_value,card_counts_list,crib_cards_value
+from cribbage.scoreHand import score_hand,pairs,fifteens,runs,right_jack,flush,sort_cards, expected_hand_value,card_counts_list,crib_cards_value
 import unittest
 import math
 
@@ -141,72 +141,24 @@ class TestScoreHand(unittest.TestCase):
         sorted5cards = sort_cards(hand, cutcard)
         self.assertEqual(0, runs(sorted5cards))
 
-    def test_two_card_fifteens(self):
-
-        # 1 two-card 15
+    def test_fifteens(self):
+        # three ways to make 15
         hand = [(2, 1), (11, 1), (7, 2), (3, 1)]
         cutcard = (5, 1)
         sorted5cards = sort_cards(hand, cutcard)
-        self.assertEqual(2, two_card_fifteens(sorted5cards))
+        self.assertEqual(6, fifteens(sorted5cards))
 
-        #3 two-card 15's
-        hand = [(10, 1), (11, 1), (7, 2), (8, 1)]
+        # 8 ways to make 15
+        hand = [(5, 1), (5, 1), (5, 2), (10, 1)]
         cutcard = (5, 1)
         sorted5cards = sort_cards(hand, cutcard)
-        self.assertEqual(6, two_card_fifteens(sorted5cards))
+        self.assertEqual(16, fifteens(sorted5cards))
 
-        #no two-card 15's
-        hand = [(10, 1), (11, 1), (7, 2), (7, 1)]
-        cutcard = (3, 1)
-        sorted5cards = sort_cards(hand, cutcard)
-        self.assertEqual(0, two_card_fifteens(sorted5cards))
-
-
-    def test_three_card_fifteens(self):
-        #1 three-card 15
-        hand = [(4, 1), (10, 1), (1, 2), (8, 1)]
-        cutcard = (2, 1)
-        sorted5cards = sort_cards(hand, cutcard)
-        self.assertEqual(2, three_card_fifteens(sorted5cards))
-
-        #2 three-card 15's
-        hand = [(4, 1), (3, 1), (4, 2), (8, 1)]
-        cutcard = (5, 1)
-        sorted5cards = sort_cards(hand, cutcard)
-        self.assertEqual(4, three_card_fifteens(sorted5cards))
-
-        # no three-card 15's
-        hand = [(4, 1), (3, 1), (4, 2), (1, 1)]
-        cutcard = (5, 1)
-        sorted5cards = sort_cards(hand, cutcard)
-        self.assertEqual(0, three_card_fifteens(sorted5cards))
-
-    def test_four_card_fifteens(self):
-        #1 four-card 15
-        hand = [(10, 1), (1, 1), (1, 2), (3, 1)]
-        cutcard = (5, 1)
-        sorted5cards = sort_cards(hand, cutcard)
-        self.assertEqual(2, four_card_fifteens(sorted5cards))
-
-        # no four-card 15's
-        hand = [(1, 1), (3, 1), (4, 2), (1, 1)]
-        cutcard = (5, 1)
-        sorted5cards = sort_cards(hand, cutcard)
-        self.assertEqual(0, four_card_fifteens(sorted5cards))
-
-
-    def test_five_card_fifteens(self):
-        #1 five-card 15
-        hand = [(10, 1), (1, 1), (1, 2), (2, 1)]
+        # 0 ways to make 15
+        hand = [(1, 1), (1, 1), (1, 2), (1, 1)]
         cutcard = (1, 1)
         sorted5cards = sort_cards(hand, cutcard)
-        self.assertEqual(2, five_card_fifteens(sorted5cards))
-
-        # no five-card 15's
-        hand = [(10, 1), (8, 1), (1, 2), (2, 1)]
-        cutcard = (1, 1)
-        sorted5cards = sort_cards(hand, cutcard)
-        self.assertEqual(0, five_card_fifteens(sorted5cards))
+        self.assertEqual(0, fifteens(sorted5cards))
 
     def test_no_points(self):
         hand = [(4, 0), (3, 1), (7, 1), (12, 2)]
